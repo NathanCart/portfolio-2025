@@ -28,15 +28,6 @@ export type Experience = {
   technologies: string[];
 };
 
-export type Testimonial = {
-  id: string;
-  name: string;
-  position: string;
-  company: string;
-  avatar: string;
-  text: string;
-};
-
 // Projects Data
 export const projects: Project[] = [
   {
@@ -372,34 +363,6 @@ export const experiences: Experience[] = [
   }
 ];
 
-// Testimonials Data
-export const testimonials: Testimonial[] = [
-  {
-    id: '1',
-    name: 'Sarah Johnson',
-    position: 'CTO',
-    company: 'Tech Innovations Inc.',
-    avatar: 'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    text: 'An exceptional developer who consistently delivers high-quality work. Their ability to understand complex business requirements and translate them into elegant technical solutions is remarkable.'
-  },
-  {
-    id: '2',
-    name: 'Michael Chen',
-    position: 'Product Manager',
-    company: 'Digital Solutions Group',
-    avatar: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    text: 'Working with this developer was a pleasure. They have a great eye for detail, excellent communication skills, and always meet deadlines. Their technical expertise significantly improved our product.'
-  },
-  {
-    id: '3',
-    name: 'Elena Rodriguez',
-    position: 'Founder',
-    company: 'StartUp Launch',
-    avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    text: 'This developer played a crucial role in the success of our startup. Their versatility and ability to quickly adapt to new technologies helped us iterate rapidly and meet our business goals.'
-  }
-];
-
 // Helper function to get project by ID
 export function getProjectById(id: string): Project | undefined {
   return projects.find(project => project.id === id);
@@ -433,9 +396,4 @@ export function getAllExperiences(): Experience[] {
     const bDate = b.endDate || new Date();
     return bDate.getTime() - aDate.getTime();
   });
-}
-
-// Helper function to get all testimonials
-export function getAllTestimonials(): Testimonial[] {
-  return testimonials;
 }

@@ -6,6 +6,7 @@ import { BookText, Code2, GraduationCap, Briefcase } from 'lucide-react'
 import { experiences } from '@/lib/data'
 import { fadeInUp, staggerContainer, fadeInLeft, fadeInRight } from '@/lib/animations'
 import { format } from 'date-fns'
+import { Badge } from '@/components/ui/badge'
 
 export function About() {
   return (
@@ -53,35 +54,41 @@ export function About() {
               </div>
               
               {/* Code content */}
-              <div className="p-6 font-mono text-sm">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="space-y-4"
-                >
-                  <div className="text-blue-500">class <span className="text-green-500">Developer</span> {'{'}</div>
-                  <div className="pl-4">
-                    <span className="text-purple-500">constructor</span>() {'{'}
-                    <div className="pl-4">
-                      this.name = <span className="text-orange-500">"John Doe"</span>;
-                      <br />
-                      this.role = <span className="text-orange-500">"Full Stack Developer"</span>;
-                      <br />
-                      this.passions = [<span className="text-orange-500">"Web Development"</span>, <span className="text-orange-500">"UI/UX"</span>, <span className=\"text-orange-500">\"Problem Solving"</span>];
-                    </div>
-                    {'}'}
-                  </div>
-                  <div className="pl-4">
-                    <span className="text-purple-500">code</span>() {'{'}
-                    <div className="pl-4">
-                      return <span className="text-orange-500">"Clean and efficient solutions"</span>;
-                    </div>
-                    {'}'}
-                  </div>
-                  <div>{'}'}</div>
-                </motion.div>
-              </div>
+             <div className="p-6 font-mono text-sm">
+  <motion.div
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    transition={{ duration: 0.5, delay: 0.2 }}
+    className="space-y-4"
+  >
+    <div className="text-blue-500">
+      class <span className="text-green-500">Developer</span> {'{'}
+    </div>
+    <div className="pl-4">
+      <span className="text-purple-500">constructor</span>() {'{'}
+      <div className="pl-4">
+        this.name = <span className="text-orange-500">"John Doe"</span>;
+        <br />
+        this.role = <span className="text-orange-500">"Full Stack Developer"</span>;
+        <br />
+        this.passions = [
+          <span className="text-orange-500">"Web Development"</span>, 
+          <span className="text-orange-500">"UI/UX"</span>, 
+          <span className="text-orange-500">"Problem Solving"</span>
+        ];
+      </div>
+      {'}'}
+    </div>
+    <div className="pl-4">
+      <span className="text-purple-500">code</span>() {'{'}
+      <div className="pl-4">
+        return <span className="text-orange-500">"Clean and efficient solutions"</span>;
+      </div>
+      {'}'}
+    </div>
+    <div>{'}'}</div>
+  </motion.div>
+</div>
               
               {/* Animated gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-primary/5" />
@@ -174,9 +181,9 @@ export function About() {
                   <p className="text-muted-foreground mb-3">{experience.description}</p>
                   <div className="flex flex-wrap gap-2 mt-3">
                     {experience.technologies.map((tech, techIndex) => (
-                      <span key={techIndex} className="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary-foreground">
+                      <Badge key={techIndex} variant="secondary">
                         {tech}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
                 </div>

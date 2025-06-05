@@ -11,7 +11,7 @@ import {
   Code2
 } from 'lucide-react'
 
-import { fadeInUp, staggerContainer, skillBar } from '@/lib/animations'
+import { fadeInUp, staggerContainer } from '@/lib/animations'
 import { getSkillsByCategory } from '@/lib/data'
 import { 
   Tabs, 
@@ -19,7 +19,7 @@ import {
   TabsList, 
   TabsTrigger 
 } from '@/components/ui/tabs'
-import { Progress } from '@/components/ui/progress'
+import { Badge } from '@/components/ui/badge'
 
 export function Skills() {
   const [selectedTab, setSelectedTab] = useState('frontend')
@@ -138,27 +138,19 @@ interface SkillListProps {
 function SkillList({ skills }: SkillListProps) {
   return (
     <motion.div 
-      className="grid grid-cols-1 md:grid-cols-2 gap-8"
+      className="flex flex-wrap justify-center gap-4"
       variants={staggerContainer(0.05, 0.1)}
       initial="hidden"
       animate="visible"
     >
       {skills.map((skill, index) => (
-        <motion.div key={skill.name} variants={fadeInUp(index * 0.05)} className="space-y-2">
-          <div className="flex justify-between">
-            <span className="font-medium">{skill.name}</span>
-            <span className="text-muted-foreground">{skill.level}%</span>
-          </div>
-          <div className="relative h-2 w-full bg-muted rounded-full overflow-hidden">
-            <motion.div
-              className="absolute top-0 left-0 h-full bg-primary rounded-full"
-              style={{ width: `${skill.level}%` }}
-              variants={skillBar(0.2 + index * 0.1)}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            />
-          </div>
+        <motion.div 
+          key={skill.name} 
+          variants={fadeInUp(index * 0.05)}
+        >
+          <Badge variant="secondary" className="text-base px-4 py-2">
+            {skill.name}
+          </Badge>
         </motion.div>
       ))}
     </motion.div>

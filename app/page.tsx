@@ -7,7 +7,6 @@ import { Hero } from '@/components/home/hero'
 import { About } from '@/components/home/about'
 import { Skills } from '@/components/home/skills'
 import { FeaturedProjects } from '@/components/home/featured-projects'
-import { Testimonials } from '@/components/home/testimonials'
 import { Contact } from '@/components/home/contact'
 import { ScrollToTop } from '@/components/ui/scroll-to-top'
 
@@ -31,8 +30,6 @@ export default function Home() {
         <Skills />
         
         <FeaturedProjects />
-        
-        <Testimonials />
         
         <div ref={contactRef} id="contact">
           <Contact />

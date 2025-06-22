@@ -700,7 +700,7 @@ export default function Home() {
 
 											{/* "More Skills" Badge - Positioned outside skills area */}
 											{hiddenSkills.length > 0 && (
-												<div className="absolute -bottom-2 -right-2">
+												<div className="absolute -bottom-4 -right-2">
 													<div className="px-3 py-1.5 rounded-full text-sm font-medium bg-zinc-700/90 text-zinc-300 border border-zinc-600 shadow-lg">
 														+{hiddenSkills.length} more
 													</div>
@@ -709,7 +709,7 @@ export default function Home() {
 
 											{/* Scroll hint - positioned at bottom left */}
 											{hiddenSkills.length > 0 && (
-												<div className="absolute -bottom-2 -left-2">
+												<div className="absolute -bottom-4 -left-2">
 													<div className="px-3 py-1.5 rounded-full text-sm font-medium bg-zinc-700/90 text-zinc-400 border border-zinc-600 shadow-lg">
 														Scroll to see more skills
 													</div>

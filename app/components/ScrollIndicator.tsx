@@ -6,6 +6,7 @@ export default function ScrollIndicator() {
 
 	useEffect(() => {
 		const handleScroll = () => {
+			if (typeof window === 'undefined') return;
 			const scrollY = window.scrollY;
 			const windowHeight = window.innerHeight;
 
@@ -17,8 +18,10 @@ export default function ScrollIndicator() {
 			}
 		};
 
-		window.addEventListener('scroll', handleScroll, { passive: true });
-		return () => window.removeEventListener('scroll', handleScroll);
+		if (typeof window !== 'undefined') {
+			window.addEventListener('scroll', handleScroll, { passive: true });
+			return () => window.removeEventListener('scroll', handleScroll);
+		}
 	}, []);
 
 	return (

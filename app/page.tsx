@@ -416,6 +416,7 @@ export default function Home() {
 
 	useEffect(() => {
 		const handleScroll = () => {
+			if (typeof window === 'undefined') return;
 			scrollRef.current = window.scrollY;
 
 			// Use requestAnimationFrame to throttle updates
@@ -429,10 +430,14 @@ export default function Home() {
 		};
 
 		// Use passive listener for better performance
-		window.addEventListener('scroll', handleScroll, { passive: true });
+		if (typeof window !== 'undefined') {
+			window.addEventListener('scroll', handleScroll, { passive: true });
+		}
 
 		return () => {
-			window.removeEventListener('scroll', handleScroll);
+			if (typeof window !== 'undefined') {
+				window.removeEventListener('scroll', handleScroll);
+			}
 			if (rafRef.current) {
 				cancelAnimationFrame(rafRef.current);
 			}

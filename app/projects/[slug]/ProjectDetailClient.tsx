@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { Project } from '../index';
 import Navbar from '../../components/Navbar';
 import Particles from '../../components/Particles';
+import ProjectBubbles from '../../components/ProjectBubbles';
+import projects from '../index';
 
 interface Props {
 	project: Project;
@@ -203,6 +205,9 @@ export default function ProjectDetailClient({ project }: Props) {
 					</div>
 				</div>
 			</div>
+
+			{/* Project Bubbles - Easy access to other projects */}
+			<ProjectBubbles projects={projects} />
 		</div>
 	);
 }

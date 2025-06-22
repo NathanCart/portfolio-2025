@@ -22,6 +22,7 @@ const ProjectBubbles: FC<ProjectBubblesProps> = ({ projects, className = '' }) =
 	const isMobile = useIsMobile();
 	const [isVisible, setIsVisible] = useState(false);
 	const [isExpanded, setIsExpanded] = useState(false);
+	const [isClosing, setIsClosing] = useState(false);
 	const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 	const [isMounted, setIsMounted] = useState(false);
 
@@ -37,7 +38,17 @@ const ProjectBubbles: FC<ProjectBubblesProps> = ({ projects, className = '' }) =
 	};
 
 	const toggleExpanded = () => {
-		setIsExpanded(!isExpanded);
+		if (isExpanded) {
+			// Start closing animation
+			setIsClosing(true);
+			// Short delay to allow exit animation to start
+			setTimeout(() => {
+				setIsExpanded(false);
+				setIsClosing(false);
+			}, 100);
+		} else {
+			setIsExpanded(true);
+		}
 	};
 
 	// Calculate optimal layout based on number of projects
@@ -104,31 +115,23 @@ const ProjectBubbles: FC<ProjectBubblesProps> = ({ projects, className = '' }) =
 				} bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-2xl shadow-blue-500/25 border-2 border-white/20 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-110 cursor-pointer group z-10`}
 			>
 				{/* Icon */}
-				<motion.div
-					animate={{ rotate: isExpanded ? 45 : 0 }}
-					transition={{ duration: 0.2 }}
-					className="flex items-center gap-2"
-				>
-					{isExpanded ? (
-						<svg
-							className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-white`}
+				<div className="flex items-center gap-2 relative">
+					<div
+						className={`${
+							isMobile ? 'w-4 h-4' : 'w-5 h-5'
+						} relative flex items-center justify-center`}
+					>
+						{/* Plus Icon */}
+						<motion.svg
+							className="text-white absolute inset-0 w-full h-full"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M6 18L18 6M6 6l12 12"
-							/>
-						</svg>
-					) : (
-						<svg
-							className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-white`}
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
+							animate={{
+								opacity: isExpanded || isClosing ? 0 : 1,
+								scale: isExpanded || isClosing ? 0.8 : 1,
+							}}
+							transition={{ duration: 0.15 }}
 						>
 							<path
 								strokeLinecap="round"
@@ -136,43 +139,59 @@ const ProjectBubbles: FC<ProjectBubblesProps> = ({ projects, className = '' }) =
 								strokeWidth={2}
 								d="M12 4v16m8-8H4"
 							/>
-						</svg>
-					)}
+						</motion.svg>
 
-					{/* Projects text - only show when not expanded */}
-					<AnimatePresence mode="wait">
-						{!isExpanded && (
-							<motion.span
-								key="projects-text"
-								initial={{ opacity: 0, width: 0 }}
-								animate={{ opacity: 1, width: 'auto' }}
-								exit={{ opacity: 0, width: 0 }}
-								transition={{ duration: 0.2, type: 'spring', stiffness: 300 }}
-								className={`${
-									isMobile ? 'text-xs' : 'text-sm'
-								} font-semibold text-white whitespace-nowrap overflow-hidden`}
-							>
-								Projects
-							</motion.span>
-						)}
-					</AnimatePresence>
-				</motion.div>
-
-				{/* Project count badge */}
-				<AnimatePresence mode="wait">
-					{!isExpanded && (
-						<motion.div
-							key="count-badge"
-							initial={{ scale: 0, opacity: 0 }}
-							animate={{ scale: 1, opacity: 1 }}
-							exit={{ scale: 0, opacity: 0 }}
-							transition={{ duration: 0.2, type: 'spring', stiffness: 400 }}
-							className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white shadow-lg"
+						{/* X Icon */}
+						<motion.svg
+							className="text-white absolute inset-0 w-full h-full"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							animate={{
+								opacity: isExpanded || isClosing ? 1 : 0,
+								scale: isExpanded || isClosing ? 1 : 0.8,
+							}}
+							transition={{ duration: 0.15 }}
 						>
-							{projects.length}
-						</motion.div>
-					)}
-				</AnimatePresence>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M6 18L18 6M6 6l12 12"
+							/>
+						</motion.svg>
+					</div>
+
+					{/* Projects text - always rendered but animated */}
+					<motion.span
+						animate={{
+							opacity: isExpanded || isClosing ? 0 : 1,
+							width: isExpanded || isClosing ? 0 : 'auto',
+							marginLeft: isExpanded || isClosing ? 0 : 8,
+						}}
+						transition={{ duration: 0.2, type: 'spring', stiffness: 300 }}
+						className={`${
+							isMobile ? 'text-xs' : 'text-sm'
+						} font-semibold text-white whitespace-nowrap overflow-hidden`}
+						style={{
+							display: isExpanded || isClosing ? 'none' : 'inline-block',
+						}}
+					>
+						Projects
+					</motion.span>
+				</div>
+
+				{/* Project count badge - always rendered but animated */}
+				<motion.div
+					animate={{
+						scale: isExpanded || isClosing ? 0 : 1,
+						opacity: isExpanded || isClosing ? 0 : 1,
+					}}
+					transition={{ duration: 0.2, type: 'spring', stiffness: 400 }}
+					className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white shadow-lg"
+				>
+					{projects.length}
+				</motion.div>
 
 				{/* Pulse effect */}
 				<motion.div

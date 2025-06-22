@@ -7,6 +7,7 @@ import BlobCursor from './components/BlogCursor';
 import Navbar from './components/Navbar';
 import TextPressure from './components/TextPressure';
 import ScrollIndicator from './components/ScrollIndicator';
+import InfiniteMenu from './components/InfiniteMenu';
 import { useEffect, useState, useRef, useMemo } from 'react';
 
 // Skills Data Structure
@@ -186,6 +187,47 @@ const skillsData = [
 		gradient: 'from-emerald-500 to-cyan-600',
 		hoverColor: 'emerald',
 		skills: ['Storybook', 'Playwright', 'ESLint', 'Prettier', 'Lighthouse', 'Semrush'],
+	},
+];
+
+// Projects Data Structure
+const projectsData = [
+	{
+		image: 'https://picsum.photos/900/900?grayscale',
+		link: 'https://github.com/NathanCart',
+		title: 'E-Commerce Platform',
+		description: 'Full-stack e-commerce solution with React, Node.js, and MongoDB',
+	},
+	{
+		image: 'https://picsum.photos/900/900?grayscale',
+		link: 'https://github.com/NathanCart',
+		title: 'Task Management App',
+		description: 'Real-time collaborative task management with WebSocket integration',
+	},
+	{
+		image: 'https://picsum.photos/900/900?grayscale',
+		link: 'https://github.com/NathanCart',
+		title: 'Portfolio Website',
+		description: 'Modern portfolio built with Next.js, TypeScript, and Framer Motion',
+	},
+	{
+		image: 'https://picsum.photos/900/900?grayscale',
+		link: 'https://github.com/NathanCart',
+		title: 'Weather Dashboard',
+		description: 'Interactive weather app with real-time data and beautiful UI',
+	},
+	{
+		image: 'https://picsum.photos/900/900?grayscale',
+		link: 'https://github.com/NathanCart',
+		title: 'Social Media Clone',
+		description: 'Feature-rich social platform with authentication and real-time features',
+	},
+	{
+		image: 'https://picsum.photos/900/900?grayscale',
+		link: 'https://github.com/NathanCart',
+		title: 'AI Chat Application',
+		description:
+			'Intelligent chatbot powered by machine learning and natural language processing',
 	},
 ];
 
@@ -633,53 +675,48 @@ export default function Home() {
 			{/* Projects Section */}
 			<section
 				id="projects"
-				className="min-h-screen bg-zinc-900 flex items-center justify-center"
+				className="min-h-screen bg-zinc-900 flex items-center justify-center relative z-30 overflow-hidden"
 			>
-				<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-					<h2 className="text-4xl md:text-6xl font-bold text-zinc-300 mb-12">Projects</h2>
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-						<div className="bg-zinc-800 p-6 rounded-lg border border-zinc-700">
-							<h3 className="text-2xl font-semibold text-zinc-300 mb-4">Project 1</h3>
-							<p className="text-zinc-400 mb-4">
-								A full-stack web application built with modern technologies.
-							</p>
-							<div className="flex gap-2 justify-center">
-								<span className="px-3 py-1 bg-zinc-700 text-zinc-300 rounded-full text-sm">
-									React
-								</span>
-								<span className="px-3 py-1 bg-zinc-700 text-zinc-300 rounded-full text-sm">
-									Node.js
-								</span>
-							</div>
+				{/* Background Pattern */}
+				<div className="absolute inset-0 opacity-5">
+					<div
+						className="absolute inset-0"
+						style={{
+							backgroundImage: `radial-gradient(circle at 25% 25%, #ffffff 1px, transparent 1px),
+							radial-gradient(circle at 75% 75%, #ffffff 1px, transparent 1px)`,
+							backgroundSize: '50px 50px',
+						}}
+					></div>
+				</div>
+
+				<div className="w-full h-full flex flex-col">
+					{/* Section Header */}
+					<div className="text-center pt-16 pb-8 relative z-10">
+						<div
+							style={{ position: 'relative', height: '30vw', maxHeight: '400px' }}
+							className="mx-auto container lg:pt-10"
+						>
+							<TextPressure
+								text="Projects"
+								flex={true}
+								alpha={false}
+								stroke={false}
+								width={true}
+								weight={true}
+								italic={true}
+								textColor="#ffffff"
+								strokeColor="#ff0000"
+								minFontSize={36}
+							/>
 						</div>
-						<div className="bg-zinc-800 p-6 rounded-lg border border-zinc-700">
-							<h3 className="text-2xl font-semibold text-zinc-300 mb-4">Project 2</h3>
-							<p className="text-zinc-400 mb-4">
-								An innovative mobile-first responsive design.
-							</p>
-							<div className="flex gap-2 justify-center">
-								<span className="px-3 py-1 bg-zinc-700 text-zinc-300 rounded-full text-sm">
-									Next.js
-								</span>
-								<span className="px-3 py-1 bg-zinc-700 text-zinc-300 rounded-full text-sm">
-									TypeScript
-								</span>
-							</div>
-						</div>
-						<div className="bg-zinc-800 p-6 rounded-lg border border-zinc-700">
-							<h3 className="text-2xl font-semibold text-zinc-300 mb-4">Project 3</h3>
-							<p className="text-zinc-400 mb-4">
-								A scalable backend API with advanced features.
-							</p>
-							<div className="flex gap-2 justify-center">
-								<span className="px-3 py-1 bg-zinc-700 text-zinc-300 rounded-full text-sm">
-									Python
-								</span>
-								<span className="px-3 py-1 bg-zinc-700 text-zinc-300 rounded-full text-sm">
-									Django
-								</span>
-							</div>
-						</div>
+						<p className="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed mt-6">
+							Explore my latest work and creative solutions
+						</p>
+					</div>
+
+					{/* Infinite Menu Container */}
+					<div className="flex-1 w-full" style={{ minHeight: '100dvh' }}>
+						<InfiniteMenu items={projectsData} />
 					</div>
 				</div>
 			</section>

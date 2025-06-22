@@ -8,6 +8,8 @@ import Navbar from './components/Navbar';
 import TextPressure from './components/TextPressure';
 import ScrollIndicator from './components/ScrollIndicator';
 import InfiniteMenu from './components/InfiniteMenu';
+import ProjectCards from './components/ProjectCards';
+import { useIsMobile } from './hooks/useIsMobile';
 import { useEffect, useState, useRef, useMemo } from 'react';
 import projects from './projects';
 
@@ -387,10 +389,60 @@ const SkillCard = ({ skill }: { skill: (typeof skillsData)[0] }) => {
 	);
 };
 
+// Function to convert technology file names to readable names
+const convertTechNames = (techs: string[]): string[] => {
+	const techMap: Record<string, string> = {
+		'react-logo.svg': 'React',
+		'nextjs-logo.svg': 'Next.js',
+		'contentful-logo.svg': 'Contentful',
+		'framer-motion-logo.svg': 'Framer Motion',
+		'tailwind-logo.svg': 'Tailwind CSS',
+		'typescript-logo.svg': 'TypeScript',
+		'nodejs-logo.svg': 'Node.js',
+		'express-logo.svg': 'Express',
+		'postgresql-logo.svg': 'PostgreSQL',
+		'mongodb-logo.svg': 'MongoDB',
+		'aws-logo.svg': 'AWS',
+		'docker-logo.svg': 'Docker',
+		'git-logo.svg': 'Git',
+		'vercel-logo.svg': 'Vercel',
+		'railway-logo.svg': 'Railway',
+		'supabase-logo.svg': 'Supabase',
+		'prisma-logo.svg': 'Prisma',
+		'drizzle-logo.svg': 'Drizzle',
+		'graphql-logo.svg': 'GraphQL',
+		'websocket-logo.svg': 'WebSockets',
+		'jwt-logo.svg': 'JWT',
+		'oauth-logo.svg': 'OAuth',
+		'react-native-logo.svg': 'React Native',
+		'expo-logo.svg': 'Expo',
+		'pwa-logo.svg': 'PWA',
+		'storybook-logo.svg': 'Storybook',
+		'playwright-logo.svg': 'Playwright',
+		'eslint-logo.svg': 'ESLint',
+		'prettier-logo.svg': 'Prettier',
+		'lighthouse-logo.svg': 'Lighthouse',
+		'semrush-logo.svg': 'Semrush',
+		'mui-logo.svg': 'MUI',
+		'shadcn-logo.svg': 'shadcn/ui',
+	};
+
+	return techs.map(
+		(tech) =>
+			techMap[tech] ||
+			tech
+				.replace('.svg', '')
+				.replace('-logo', '')
+				.replace(/-/g, ' ')
+				.replace(/\b\w/g, (l) => l.toUpperCase())
+	);
+};
+
 export default function Home() {
 	const [scrollY, setScrollY] = useState(0);
 	const scrollRef = useRef<number>(0);
 	const rafRef = useRef<number | undefined>(undefined);
+	const isMobile = useIsMobile();
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -472,6 +524,7 @@ export default function Home() {
 			link: project.hosted || project.github || '#',
 			title: project.title,
 			description: project.description,
+			technologies: project.technologies ? convertTechNames(project.technologies) : [],
 		}));
 	}, []);
 
@@ -689,7 +742,7 @@ export default function Home() {
 					<div className="text-center pt-16 pb-8 relative z-10">
 						<div
 							style={{ position: 'relative', height: '30vw', maxHeight: '400px' }}
-							className="mx-auto container lg:pt-10 px-4"
+							className="mx-auto container lg:pt-10 px-4 "
 						>
 							<TextPressure
 								text="Projects"
@@ -709,10 +762,16 @@ export default function Home() {
 						</p>
 					</div>
 
-					{/* Infinite Menu Container */}
-					<div className="flex-1 w-full" style={{ minHeight: '100dvh' }}>
-						<InfiniteMenu items={projectsData} />
-					</div>
+					{/* Conditional Project Display */}
+					{isMobile ? (
+						<div className="flex-1 w-full pb-16">
+							<ProjectCards items={projectsData} />
+						</div>
+					) : (
+						<div className="flex-1 w-full" style={{ minHeight: '100dvh' }}>
+							<InfiniteMenu items={projectsData} />
+						</div>
+					)}
 				</div>
 			</section>
 		</main>

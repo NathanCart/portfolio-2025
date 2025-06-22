@@ -645,6 +645,7 @@ interface MenuItem {
 	link: string;
 	title: string;
 	description: string;
+	technologies?: string[];
 }
 
 type ActiveItemCallback = (index: number) => void;
@@ -1144,8 +1145,10 @@ const defaultItems: MenuItem[] = [
 	{
 		image: 'https://picsum.photos/900/900?grayscale',
 		link: 'https://google.com/',
-		title: '',
-		description: '',
+		title: 'Sample Project',
+		description:
+			'A beautiful and innovative web application showcasing modern design principles and cutting-edge technology.',
+		technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
 	},
 ];
 
@@ -1229,53 +1232,70 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
 			{/* Click and drag instruction indicator */}
 			<div
 				className={`
-					absolute bottom-40 left-1/2 transform -translate-x-1/2 pointer-events-none z-20
+					absolute top-20 left-1/2 transform -translate-x-1/2 pointer-events-none z-20
 					transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
 					${hasInteracted ? 'opacity-0 translate-y-8 scale-95' : 'opacity-100 translate-y-0 scale-100'}
 				`}
 			>
-				<div className="bg-zinc-900/95 backdrop-blur-md border border-zinc-700/60 rounded-3xl px-8 py-5 text-center shadow-2xl">
-					<div className="flex items-center justify-center gap-4 mb-2">
-						<div className="w-12 h-12 bg-zinc-800/80 border border-zinc-600/60 rounded-xl flex items-center justify-center shadow-inner">
-							<svg
-								className="w-6 h-6 text-zinc-300"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M8 9l4-4 4 4m0 6l-4 4-4-4"
-								/>
-							</svg>
-						</div>
-						<span className="text-zinc-200 font-semibold text-xl tracking-wide">
-							Click & Drag
-						</span>
+				<div className="bg-zinc-900/95 backdrop-blur-md border border-zinc-700/60 rounded-3xl px-8 py-5 text-center shadow-2xl relative overflow-hidden group">
+					{/* Animated background gradient */}
+					<div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse"></div>
+
+					{/* Glowing border effect */}
+					<div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
+
+					{/* Floating particles */}
+					<div className="absolute inset-0 overflow-hidden">
+						<div className="absolute top-2 left-4 w-1 h-1 bg-blue-400 rounded-full animate-ping opacity-75"></div>
+						<div
+							className="absolute top-6 right-6 w-1 h-1 bg-purple-400 rounded-full animate-ping opacity-75"
+							style={{ animationDelay: '0.5s' }}
+						></div>
+						<div
+							className="absolute bottom-4 left-8 w-1 h-1 bg-pink-400 rounded-full animate-ping opacity-75"
+							style={{ animationDelay: '1s' }}
+						></div>
 					</div>
-					<p className="text-zinc-400 text-base font-medium">to explore projects</p>
+
+					<div className="relative z-10">
+						<div className="flex items-center justify-center gap-4 mb-2">
+							<span className="text-zinc-200 font-semibold text-xl tracking-wide group-hover:text-white transition-colors duration-300">
+								<span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent group-hover:from-white group-hover:to-white transition-all duration-300">
+									Hold & Drag
+								</span>
+							</span>
+						</div>
+						<p className="text-zinc-400 text-base font-medium group-hover:text-zinc-300 transition-colors duration-300">
+							to explore projects
+						</p>
+					</div>
 				</div>
 			</div>
 
 			{activeItem && (
 				<>
+					{/* Text background overlay for better readability */}
+					<div className="absolute inset-0 bg-gradient-to-r from-zinc-900/20 via-transparent to-zinc-900/20 pointer-events-none z-5" />
+
 					<h2
 						className={`
           select-none
           absolute
           font-black
+          uppercase
           text-zinc-300
-          [font-size:4rem]
-          left-[1.6em]
+          text-4xl md:text-5xl lg:text-6xl xl:text-7xl
+          left-4 md:left-8 lg:left-12 xl:left-16
           top-1/2
           transform
-          translate-x-[20%]
           -translate-y-1/2
+          max-w-[8ch] md:max-w-[10ch] lg:max-w-[12ch] xl:max-w-[14ch]
+          leading-tight
+          drop-shadow-lg
           transition-all
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
           pointer-events-none
+          z-10
           ${isMoving ? 'opacity-0 duration-[100ms]' : 'opacity-100 duration-[500ms]'}
         `}
 					>
@@ -1286,30 +1306,126 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
 						className={`
           select-none
           absolute
-          max-w-[10ch]
-          text-zinc-400
-          text-[1.5rem]
+          max-w-[10ch] md:max-w-[14ch] lg:max-w-[18ch] xl:max-w-[22ch]
+          text-zinc-300
+          text-lg md:text-xl lg:text-2xl xl:text-3xl
+          leading-relaxed
           top-1/2
-          right-[1%]
+          right-4 md:right-8 lg:right-12 xl:right-16
+          transform
+          -translate-y-1/2
+          drop-shadow-md
           transition-all
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
           pointer-events-none
+          z-10
           ${
 				isMoving
-					? 'opacity-0 duration-[100ms] translate-x-[-60%] -translate-y-1/2'
-					: 'opacity-100 duration-[500ms] translate-x-[-90%] -translate-y-1/2'
+					? 'opacity-0 duration-[100ms] translate-x-8'
+					: 'opacity-100 duration-[500ms] translate-x-0'
 			}
         `}
 					>
 						{activeItem.description}
 					</p>
 
+					{/* Technologies Section */}
+					{activeItem.technologies && activeItem.technologies.length > 0 && (
+						<div
+							className={`
+            select-none
+            absolute
+            left-1/2
+            transform
+            -translate-x-1/2
+            z-10
+            transition-all
+            ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
+            pointer-events-none
+            ${
+				isMoving
+					? 'opacity-0 duration-[100ms] scale-95'
+					: 'opacity-100 duration-[500ms] scale-100'
+			}
+            ${
+				isMoving
+					? 'bottom-[-100px]'
+					: 'bottom-[16em] md:bottom-[14em] lg:bottom-[12em] xl:bottom-[10em]'
+			}
+          `}
+						>
+							<div className="bg-zinc-900/90 backdrop-blur-md border border-zinc-700/60 rounded-2xl px-4 md:px-6 py-3 md:py-4 shadow-2xl relative overflow-hidden group max-w-[90vw] md:max-w-none">
+								{/* Animated background gradient */}
+								<div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse"></div>
+
+								{/* Glowing border effect */}
+								<div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
+
+								{/* Floating particles */}
+								<div className="absolute inset-0 overflow-hidden">
+									<div className="absolute top-2 left-4 w-1 h-1 bg-blue-400 rounded-full animate-ping opacity-75"></div>
+									<div
+										className="absolute top-6 right-6 w-1 h-1 bg-purple-400 rounded-full animate-ping opacity-75"
+										style={{ animationDelay: '0.5s' }}
+									></div>
+									<div
+										className="absolute bottom-4 left-8 w-1 h-1 bg-pink-400 rounded-full animate-ping opacity-75"
+										style={{ animationDelay: '1s' }}
+									></div>
+								</div>
+
+								<div className="relative z-10">
+									<h3 className="text-zinc-300 font-semibold text-sm md:text-base mb-2 md:mb-3 text-center group-hover:text-white transition-colors duration-300">
+										<span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+											Technologies Used
+										</span>
+									</h3>
+									<div className="flex flex-wrap justify-center gap-1.5 md:gap-2 max-w-[80vw] md:max-w-xs lg:max-w-sm">
+										{activeItem.technologies.slice(0, 6).map((tech, index) => (
+											<span
+												key={index}
+												className="px-2 md:px-3 py-1 md:py-1.5 bg-zinc-800/80 border border-zinc-600/60 rounded-full text-xs md:text-sm text-zinc-300 font-medium shadow-lg 
+													hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-purple-600/20 
+													hover:border-blue-500/60 hover:text-white hover:scale-110 
+													transition-all duration-300 ease-out cursor-pointer
+													hover:shadow-blue-500/25 hover:shadow-lg
+													animate-fade-in-up"
+												style={{
+													animationDelay: `${index * 100}ms`,
+													animationFillMode: 'both',
+												}}
+											>
+												{tech}
+											</span>
+										))}
+										{activeItem.technologies.length > 6 && (
+											<span
+												className="px-2 md:px-3 py-1 md:py-1.5 bg-zinc-700/80 border border-zinc-600/60 rounded-full text-xs md:text-sm text-zinc-400 font-medium shadow-lg
+													hover:bg-gradient-to-r hover:from-purple-600/20 hover:to-pink-600/20
+													hover:border-purple-500/60 hover:text-white hover:scale-110
+													transition-all duration-300 ease-out cursor-pointer
+													hover:shadow-purple-500/25 hover:shadow-lg
+													animate-fade-in-up"
+												style={{
+													animationDelay: `${6 * 100}ms`,
+													animationFillMode: 'both',
+												}}
+											>
+												+{activeItem.technologies.length - 6} more
+											</span>
+										)}
+									</div>
+								</div>
+							</div>
+						</div>
+					)}
+
 					<div
 						onClick={handleButtonClick}
 						className={`
           absolute
           left-1/2
-          z-10
+          z-20
           px-6
           py-3
           bg-gradient-to-r from-zinc-800 to-zinc-700
@@ -1327,7 +1443,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
           ${
 				isMoving
 					? 'bottom-[-80px] opacity-0 pointer-events-none duration-[100ms] scale-0 -translate-x-1/2'
-					: 'bottom-[3.8em] opacity-100 pointer-events-auto duration-[500ms] scale-100 -translate-x-1/2'
+					: 'bottom-[6em] md:bottom-[5em] lg:bottom-[4em] xl:bottom-[3em] opacity-100 pointer-events-auto duration-[500ms] scale-100 -translate-x-1/2'
 			}
         `}
 					>

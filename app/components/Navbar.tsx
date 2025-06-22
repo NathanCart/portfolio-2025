@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 export default function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false);
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -14,6 +15,9 @@ export default function Navbar() {
 	}, []);
 
 	const scrollToSection = (sectionId: string) => {
+		// Close mobile menu when navigating
+		setIsMobileMenuOpen(false);
+
 		if (sectionId === 'about') {
 			// For the about section, scroll to a position that shows the About section properly
 			window.scrollTo({
@@ -69,9 +73,14 @@ export default function Navbar() {
 
 					{/* Mobile menu button - Centered */}
 					<div className="md:hidden">
-						<button className="text-zinc-300 hover:text-white p-3 rounded-lg hover:bg-zinc-800/50 transition-all duration-300 cursor-pointer">
+						<button
+							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+							className="text-zinc-300 hover:text-white p-3 rounded-lg hover:bg-zinc-800/50 transition-all duration-300 cursor-pointer"
+						>
 							<svg
-								className="h-8 w-8"
+								className={`h-8 w-8 transition-transform duration-300 ${
+									isMobileMenuOpen ? 'rotate-90' : 'rotate-0'
+								}`}
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke="currentColor"
@@ -83,6 +92,37 @@ export default function Navbar() {
 									d="M4 6h16M4 12h16M4 18h16"
 								/>
 							</svg>
+						</button>
+					</div>
+				</div>
+
+				{/* Mobile Menu */}
+				<div
+					className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+						isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+					}`}
+				>
+					<div className="pb-4 space-y-2">
+						<button
+							onClick={() => scrollToSection('about')}
+							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group"
+						>
+							<span className="relative z-10">About</span>
+							<div className="absolute bottom-0 left-0 w-0 h-1 bg-white group-hover:w-full transition-all duration-300"></div>
+						</button>
+						<button
+							onClick={() => scrollToSection('skills')}
+							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group"
+						>
+							<span className="relative z-10">Skills</span>
+							<div className="absolute bottom-0 left-0 w-0 h-1 bg-white group-hover:w-full transition-all duration-300"></div>
+						</button>
+						<button
+							onClick={() => scrollToSection('projects')}
+							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group"
+						>
+							<span className="relative z-10">Projects</span>
+							<div className="absolute bottom-0 left-0 w-0 h-1 bg-white group-hover:w-full transition-all duration-300"></div>
 						</button>
 					</div>
 				</div>

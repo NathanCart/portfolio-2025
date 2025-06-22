@@ -710,7 +710,7 @@ class InfiniteGridMenu {
 		buffer: WebGLBuffer | null;
 	};
 
-	public instancePositions: vec3[] = [];
+	private instancePositions: vec3[] = [];
 	private DISC_INSTANCE_COUNT = 0;
 	private atlasSize = 1;
 

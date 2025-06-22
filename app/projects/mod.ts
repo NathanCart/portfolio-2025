@@ -6,9 +6,9 @@ const mod: Project = {
 		'Military Corrective Training Centre is a web application for detainees to access information and staff to manage resources.',
 	slug: 'mctc-learner-platform',
 	image: '/work/mod-cover.webp',
-	title: 'Military Corrective Training Centre',
+	title: 'Military Training Centre',
 	description:
-		'Military Corrective Training Centre is a web application for detainees to access information and staff to manage resources.',
+		'A web application for staff to manage resources and detainees to access information.',
 	what: 'Military Corrective Training Centre is a web application for detainees to access information and staff to manage resources. The goal is to provide a seamless user experience for detainees to access information and for staff to manage resources. The website will be built using React, Material-UI, Node.js, and Express.js. The website will be able to support different users with different roles.',
 	technologies: ['react-logo.svg', 'mui-logo.svg', 'nodejs-logo.svg', 'express-logo.svg'],
 	how: 'By utilising React, Material-UI, Node.js, and Express.js, we were able to build a website that met the client requirements. React was used to build the frontend of the website, Material-UI was used for the styling of the website, and Node.js and Express.js were used to build the backend of the website. The website has role management to allow different users to access different parts of the website. For example, detainees can access information and staff can manage resources. There are files, news, user management, action history for admins to view detainee activity, useful links and a dynamic form creation system which creates dynamic forms for detainees to fill out. Staff can view and download this data from the dashboard.',

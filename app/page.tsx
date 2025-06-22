@@ -572,8 +572,8 @@ export default function Home() {
 
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
 					{/* Section Header */}
-					<div className="mb-16">
-						<div style={{ position: 'relative', height: '30vw', maxHeight: '220px' }}>
+					<div className="mb-8 lg:mb-16">
+						<div style={{ position: 'relative', height: '15vw', maxHeight: '220px' }}>
 							<TextPressure
 								text="Skills & Tech"
 								flex={true}
@@ -663,22 +663,6 @@ export default function Home() {
 						<p className="text-lg text-zinc-400 mb-6">
 							Always learning and exploring new technologies
 						</p>
-						<div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-zinc-800 to-zinc-700 border border-zinc-600 rounded-xl text-zinc-300 hover:from-zinc-700 hover:to-zinc-600 hover:border-zinc-500 transition-all duration-300">
-							<span>View My Work</span>
-							<svg
-								className="w-4 h-4"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M17 8l4 4m0 0l-4 4m4-4H3"
-								/>
-							</svg>
-						</div>
 					</div>
 				</div>
 			</section>
@@ -705,7 +689,7 @@ export default function Home() {
 					<div className="text-center pt-16 pb-8 relative z-10">
 						<div
 							style={{ position: 'relative', height: '30vw', maxHeight: '400px' }}
-							className="mx-auto container lg:pt-10"
+							className="mx-auto container lg:pt-10 px-4"
 						>
 							<TextPressure
 								text="Projects"

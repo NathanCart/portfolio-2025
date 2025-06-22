@@ -3,17 +3,26 @@ import { Project } from '.';
 const mod: Project = {
 	seoTitle: 'Military Corrective Training Centre | Nathan Carter Web Developer',
 	seoDescription:
-		'Military Corrective Training Centre is a web application for detainees to access information and staff to manage resources.',
+		'Secure web application for Military Corrective Training Centre, featuring role-based access control, dynamic form generation, and comprehensive resource management.',
 	slug: 'mctc-learner-platform',
 	image: '/work/mod-cover.webp',
 	title: 'Military Training Centre',
 	description:
-		'A web application for staff to manage resources and detainees to access information.',
-	what: 'Military Corrective Training Centre is a web application for detainees to access information and staff to manage resources. The goal is to provide a seamless user experience for detainees to access information and for staff to manage resources. The website will be built using React, Material-UI, Node.js, and Express.js. The website will be able to support different users with different roles.',
-	technologies: ['react-logo.svg', 'mui-logo.svg', 'nodejs-logo.svg', 'express-logo.svg'],
-	how: 'By utilising React, Material-UI, Node.js, and Express.js, we were able to build a website that met the client requirements. React was used to build the frontend of the website, Material-UI was used for the styling of the website, and Node.js and Express.js were used to build the backend of the website. The website has role management to allow different users to access different parts of the website. For example, detainees can access information and staff can manage resources. There are files, news, user management, action history for admins to view detainee activity, useful links and a dynamic form creation system which creates dynamic forms for detainees to fill out. Staff can view and download this data from the dashboard.',
+		'Secure web application for Military Corrective Training Centre staff and detainees, featuring role-based access control and dynamic resource management.',
+	what: 'The Military Corrective Training Centre required a secure, role-based web application to manage detainee information and staff resources. The system needed to support multiple user roles with different access levels, provide dynamic form creation capabilities for detainee data collection, and offer comprehensive resource management tools. Security was paramount, requiring robust authentication and authorization systems to protect sensitive information.',
+	technologies: [
+		'React',
+		'TypeScript',
+		'Material-UI',
+		'Node.js',
+		'Express.js',
+		'JWT',
+		'PostgreSQL',
+		'bcrypt',
+	],
+	how: 'Built a secure full-stack application using React with TypeScript and Material-UI for the frontend, implementing comprehensive role-based access control. Developed a Node.js/Express.js backend with JWT authentication and bcrypt password hashing for security. Created a dynamic form generation system that allows staff to create custom forms for detainee data collection, with real-time data validation and storage. Implemented features including file management, news distribution, user management, action history tracking, and useful links. The system provides different interfaces for detainees (information access) and staff (resource management and data analysis).',
 	conclusion:
-		'Military Corrective Training Centre was successfully created to a high standard and met the client requirements. The website is engaging and provides a seamless user experience. The website is built using React, Material-UI, Node.js, and Express.js. I successfully deepened my understanding on role management systems and created a dynamic form creation system which creates forms for detainees to fill out. Staff can view and download this data from the dashboard.',
+		'The Military Training Centre application successfully delivered a secure, scalable solution that meets strict security requirements while providing intuitive user experiences for different roles. The project demonstrated expertise in security implementation, role-based access control, and dynamic form generation. Key achievements include building a comprehensive user management system, implementing secure authentication, and creating flexible data collection tools. The application continues to serve the training centre effectively, providing both detainees and staff with the tools they need.',
 };
 
 export default mod;

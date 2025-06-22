@@ -2,17 +2,28 @@ import { Project } from '.';
 
 const armaKarmaDashboard: Project = {
 	seoTitle: 'Arma Karma Dashboard | Nathan Carter Web Developer',
-	seoDescription: 'Arma Karma Dashboard is a dashboard for Arma Karma to track analytics.',
+	seoDescription:
+		'Advanced analytics dashboard for Arma Karma insurance, featuring real-time data aggregation, user journey insights, and comprehensive reporting.',
 	slug: 'arma-karma-dashboard',
 	image: '/work/arma-karma/ak-dashboard-cover.webp',
 	title: 'Arma Karma Dashboard',
 	description:
-		'Arma Karma Dashboard is a dashboard for Arma Karma to track analytics from the journey.',
-	what: 'Arma Karma Dashboard is a dashboard for Arma Karma to track analytics from the journey. This includes things such as when users drop out of the journey, how much they spend on average and much more. The goal of the dashboard is to provide insights into the user journey and to allow for easy tracking of the user journey. The dashboard is built using React and Material-UI for the frontend and Node.js and Express.js for the backend. ',
-	technologies: ['react-logo.svg', 'mui-logo.svg', 'nodejs-logo.svg', 'express-logo.svg'],
-	how: 'By utilising React and Material-UI we were able to build a dashboard that is easy to use and provides insights into the user journey. Node.js and Express.js were used to build complex data aggregation queries to provide the insights needed. My role in this project was to build the frontend of the dashboard and to build upon the data aggregation queries in the backend.',
+		'Advanced analytics dashboard for Arma Karma insurance, providing real-time insights into user journeys, conversion rates, and business performance.',
+	what: 'Arma Karma needed a comprehensive analytics dashboard to track user behavior, conversion rates, and business performance across their insurance journey platform. The dashboard required real-time data aggregation from multiple sources, sophisticated data visualization capabilities, and actionable insights to optimize user experience and business outcomes. The system needed to process large volumes of data while providing intuitive, interactive visualizations for business stakeholders.',
+	technologies: [
+		'React',
+		'TypeScript',
+		'Material-UI',
+		'Node.js',
+		'Express.js',
+		'PostgreSQL',
+		'Redis',
+		'Chart.js',
+		'D3.js',
+	],
+	how: 'Developed a sophisticated analytics dashboard using React with TypeScript and Material-UI for the frontend, creating interactive data visualizations and real-time dashboards. Built a powerful Node.js/Express.js backend with complex data aggregation queries to process user journey data, conversion metrics, and business performance indicators. Implemented advanced data visualization using Chart.js and D3.js for interactive charts, graphs, and analytics displays. Created real-time data processing capabilities with Redis caching for optimal performance. The dashboard provides insights into user drop-off points, average spending patterns, conversion funnels, and comprehensive business metrics.',
 	conclusion:
-		'In conclusion, the dashboard is a success. The client is happy with the insights provided and is able to easily track the user journey. The dashboard is fast and responsive and is able to provide insights into the user journey. I learnt how to build complex data aggregation queries and how to build a dashboard that is easy to use and provides insights into the user journey.',
+		'The Arma Karma analytics dashboard successfully delivered powerful insights into user behavior and business performance, enabling data-driven decision making. The project demonstrated expertise in building complex data aggregation systems, creating interactive visualizations, and processing large-scale analytics data. Key achievements include implementing real-time data processing, building sophisticated data visualization components, and creating actionable business intelligence tools. The dashboard continues to provide valuable insights that drive business optimization and user experience improvements.',
 };
 
 export default armaKarmaDashboard;

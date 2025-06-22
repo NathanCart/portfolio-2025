@@ -2,17 +2,19 @@ import { Project } from '.';
 
 const armaKarmaMarketing: Project = {
 	seoTitle: 'Arma Karma Marketing | Nathan Carter Web Developer',
-	seoDescription: 'Arma Karma Marketing is a marketing website for Arma Karma.',
+	seoDescription:
+		'Modern marketing website for Arma Karma insurance, built with TinaCMS for easy content management and optimized for search engines.',
 	slug: 'arma-karma-marketing',
 	hosted: 'https://armakarma.insure/',
 	image: '/work/arma-karma/ak-marketing-cover.webp',
 	title: 'Arma Karma Marketing',
-	description: 'Arma Karmas front facing marketing website.',
-	what: 'Arma Karma Marketing is Arma Karams front facing marketing website. The goal of the website is to provide information about the company and the services they provide. The website is built using TinaCMS which is a headless CMS that allows for the easy editing of the website.',
-	technologies: ['react-logo.svg', 'tina-logo.svg', 'nextjs-logo.svg', 'mui-logo.svg'],
-	how: 'Utilising TinaCMS I was able to build a website that allows for easy editing of the content. This allows the client to easily update the website without needing to know how to code. Tina is built upon Next.js which allows for a fast and responsive website. The website is hosted on Vercel which allows for easy deployment and scaling. ',
+	description:
+		'Modern marketing website for Arma Karma insurance, featuring TinaCMS content management and comprehensive SEO optimization.',
+	what: 'Arma Karma needed a modern, SEO-optimized marketing website that would effectively communicate their insurance services and value proposition. The website required easy content management capabilities for non-technical users, fast loading times for optimal user experience, and comprehensive SEO features to improve search engine visibility. The goal was to create a professional, engaging website that could be easily maintained and updated by the marketing team.',
+	technologies: ['Next.js', 'React', 'TypeScript', 'TinaCMS', 'Material-UI', 'Vercel', 'GraphQL'],
+	how: 'Built a modern marketing website using Next.js 14 with TypeScript for optimal performance and SEO. Integrated TinaCMS as a headless content management system, enabling non-technical users to easily update website content through an intuitive visual editor. Implemented comprehensive SEO optimization including meta tags, structured data, and performance optimization. Used Material-UI for consistent, responsive design components. Deployed on Vercel for optimal performance, automatic deployments, and global CDN distribution. The website features fast loading times, mobile responsiveness, and easy content management capabilities.',
 	conclusion:
-		'Overall the website is a success. The client is happy with the website and is able to easily update the content. The website is fast and responsive and is hosted on a reliable platform. I learnt how to utilise headless CMSs and how to build a website that is easy to update for clients. I also broadened my understanding of SEO principles from creating this project.',
+		'The Arma Karma marketing website successfully delivered a modern, SEO-optimized platform that meets both technical and business requirements. The project demonstrated expertise in headless CMS integration, SEO optimization, and performance-focused development. Key achievements include implementing TinaCMS for easy content management, optimizing for search engines, and creating a fast, responsive website. The platform continues to serve Arma Karma effectively, providing an engaging user experience while enabling easy content updates.',
 };
 
 export default armaKarmaMarketing;

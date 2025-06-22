@@ -3,17 +3,26 @@ import { Project } from '.';
 const ballen: Project = {
 	seoTitle: 'Ballen Dashboard | Nathan Carter Web Developer',
 	seoDescription:
-		'Ballen Dashboard is a web application which utilises web scraping and artificial intelligence to provide a variety of horror stories for employees to create projects from.',
+		'AI-powered content management dashboard for Ballen Studios, featuring web scraping, machine learning categorization, and comprehensive story research tools.',
 	slug: 'ballen-dashboard',
 	image: '/work/ballen-cover.webp',
 	title: 'Ballen Dashboard',
 	description:
-		'Ballen Dashboard is a web application for employees to research horror stories for the Ballen Youtube organisation.',
-	what: 'Ballen Dashboard is a web application which utilises web scraping and artificial intelligence to provide a huge collection of horror stories for employees to create projects from. We also featured an ai training model which functioned via categorisation of articles. The employees can access these articles via a queue and then check the categorisation to tweak how the model categorises data.',
-	technologies: ['react-logo.svg', 'mui-logo.svg', 'nodejs-logo.svg', 'express-logo.svg'],
-	how: 'My role within building this dashboard was to create the frontend using Material-UI and the backend using Node.js and Express.js. I had to integrate my Express api to communicate with a Django python API which collected masses of horror stories.',
+		'AI-powered content management system for Ballen Studios, enabling researchers to access and categorize thousands of horror stories for YouTube content creation.',
+	what: 'Ballen Studios needed a sophisticated content management system to support their YouTube horror story content creation. The platform required web scraping capabilities to collect horror stories from various sources, AI-powered categorization to organize content, and an intuitive interface for researchers to review and refine the AI classifications. The system needed to handle thousands of articles while providing efficient workflow management for content researchers.',
+	technologies: [
+		'React',
+		'TypeScript',
+		'Material-UI',
+		'Node.js',
+		'Express.js',
+		'Python',
+		'Django',
+		'PostgreSQL',
+	],
+	how: 'Developed a full-stack application using React with TypeScript and Material-UI for the frontend, creating complex forms with autocomplete functionality and file management systems. Built a Node.js/Express.js API that seamlessly integrates with a Django Python backend responsible for web scraping and AI model training. Implemented an AI training system that allows researchers to review and correct article categorizations, continuously improving the machine learning model. The system processes thousands of articles and provides real-time feedback to enhance categorization accuracy.',
 	conclusion:
-		'Ballen Dashboard was successfully created to a high standard and met the client requirements. The website is engaging and provides a seamless user experience. The website is built using Material-UI, Node.js, and Express.js. I successfully learnt how to integrate a Django python API to communicate with my Express API. Also, I gained complex insight into Mui Materials component library due to the complex nature of the design featuring a multitude of complex forms such as autocompletes and file pickers. I build an AI trainer system which allowed users to categorise articles successfully and currently thousands of articles have been reviewed for our model.',
+		'The Ballen Dashboard successfully revolutionized content research workflows, processing thousands of horror stories with AI assistance. The project demonstrated advanced full-stack development skills, including complex API integrations between Node.js and Django systems. Key achievements include building sophisticated Material-UI components, implementing AI training workflows, and creating a scalable content management system. The platform has significantly improved content research efficiency and continues to process and categorize articles for Ballen Studios.',
 };
 
 export default ballen;

@@ -1,9 +1,15 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 
 export default function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const router = useRouter();
+	const pathname = usePathname();
+	const isHomePage = pathname === '/';
+	const mobileMenuRef = useRef<HTMLDivElement>(null);
+	const mobileButtonRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -14,23 +20,82 @@ export default function Navbar() {
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
 
+	// Close mobile menu when clicking outside
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				isMobileMenuOpen &&
+				mobileMenuRef.current &&
+				!mobileMenuRef.current.contains(event.target as Node) &&
+				mobileButtonRef.current &&
+				!mobileButtonRef.current.contains(event.target as Node)
+			) {
+				setIsMobileMenuOpen(false);
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => document.removeEventListener('mousedown', handleClickOutside);
+	}, [isMobileMenuOpen]);
+
+	// Close mobile menu on route change
+	useEffect(() => {
+		setIsMobileMenuOpen(false);
+	}, [pathname]);
+
 	const scrollToSection = (sectionId: string) => {
 		// Close mobile menu when navigating
 		setIsMobileMenuOpen(false);
 
-		if (sectionId === 'about') {
-			// For the about section, scroll to a position that shows the About section properly
-			window.scrollTo({
-				top: window.innerHeight * 0.8,
-				behavior: 'smooth',
-			});
+		if (!isHomePage) {
+			// If we're on a project page, navigate to home first
+			router.push('/');
+			// Wait for navigation to complete before scrolling
+			setTimeout(() => {
+				scrollToSectionOnHome(sectionId);
+			}, 500); // Increased timeout to ensure navigation completes
 		} else {
-			// For other sections, use normal scroll behavior
-			const element = document.getElementById(sectionId);
-			if (element) {
-				element.scrollIntoView({ behavior: 'smooth' });
-			}
+			scrollToSectionOnHome(sectionId);
 		}
+	};
+
+	const scrollToSectionOnHome = (sectionId: string) => {
+		// Add a small delay to ensure DOM is ready
+		setTimeout(() => {
+			if (sectionId === 'about') {
+				// For the about section, scroll to a position that shows the About section properly
+				window.scrollTo({
+					top: window.innerHeight * 0.8,
+					behavior: 'smooth',
+				});
+			} else if (sectionId === 'projects') {
+				// For projects section, scroll to the projects section
+				const element = document.getElementById(sectionId);
+				if (element) {
+					element.scrollIntoView({ behavior: 'smooth' });
+				} else {
+					// Fallback: scroll to a position where projects should be
+					window.scrollTo({
+						top: window.innerHeight * 2.5, // Approximate position of projects section
+						behavior: 'smooth',
+					});
+				}
+			} else {
+				// For other sections, use normal scroll behavior
+				const element = document.getElementById(sectionId);
+				if (element) {
+					element.scrollIntoView({ behavior: 'smooth' });
+				} else {
+					// Retry once more after a short delay in case DOM wasn't ready
+					setTimeout(() => {
+						const retryElement = document.getElementById(sectionId);
+						if (retryElement) {
+							retryElement.scrollIntoView({ behavior: 'smooth' });
+						}
+					}, 200);
+				}
+			}
+		}, 100);
 	};
 
 	return (
@@ -74,8 +139,10 @@ export default function Navbar() {
 					{/* Mobile menu button - Centered */}
 					<div className="md:hidden">
 						<button
+							ref={mobileButtonRef}
 							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 							className="text-zinc-300 hover:text-white p-3 rounded-lg hover:bg-zinc-800/50 transition-all duration-300 cursor-pointer"
+							aria-label="Toggle mobile menu"
 						>
 							<svg
 								className={`h-8 w-8 transition-transform duration-300 ${
@@ -98,28 +165,29 @@ export default function Navbar() {
 
 				{/* Mobile Menu */}
 				<div
+					ref={mobileMenuRef}
 					className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-						isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+						isMobileMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
 					}`}
 				>
-					<div className="pb-4 space-y-2">
+					<div className="pb-4 space-y-2 bg-zinc-900/95 backdrop-blur-md rounded-lg border border-zinc-800/50 mt-2">
 						<button
 							onClick={() => scrollToSection('about')}
-							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group"
+							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group relative"
 						>
 							<span className="relative z-10">About</span>
 							<div className="absolute bottom-0 left-0 w-0 h-1 bg-white group-hover:w-full transition-all duration-300"></div>
 						</button>
 						<button
 							onClick={() => scrollToSection('skills')}
-							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group"
+							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group relative"
 						>
 							<span className="relative z-10">Skills</span>
 							<div className="absolute bottom-0 left-0 w-0 h-1 bg-white group-hover:w-full transition-all duration-300"></div>
 						</button>
 						<button
 							onClick={() => scrollToSection('projects')}
-							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group"
+							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group relative"
 						>
 							<span className="relative z-10">Projects</span>
 							<div className="absolute bottom-0 left-0 w-0 h-1 bg-white group-hover:w-full transition-all duration-300"></div>

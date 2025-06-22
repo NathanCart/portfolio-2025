@@ -2,16 +2,28 @@ import { Project } from '.';
 
 const att: Project = {
 	seoTitle: 'Anglian Truck Tyres | Nathan Carter Web Developer',
-	seoDescription: 'Anglian Truck Tyres is a web application for truck and van management.',
+	seoDescription:
+		'Comprehensive fleet management dashboard for Anglian Truck Tyres, featuring vehicle tracking, report generation, and document management systems.',
 	slug: 'anglian-truck-tyres',
 	image: '/work/att-cover.webp',
 	title: 'Anglian Truck Tyres',
-	description: 'Anglian Truck Tyres is a web application dashboard for truck and van management.',
-	what: 'Anglian Truck Tyres is a web application dashboard for truck and van management. The goal is to provide a seamless user experience for truck and van management. The website will be built using React, Material-UI, Node.js, and Express.js. The website will be able to support different users with different roles. Users will be able to submit reports on their van and truck usage. This will allow the company to track the usage of their vans and trucks. There will be a documents upload system for users to access important documents. ',
-	technologies: ['react-logo.svg', 'mui-logo.svg', 'nodejs-logo.svg', 'express-logo.svg'],
-	how: 'By utilising React, Material-UI, Node.js, and Express.js, we were able to build a website that met the client requirements. React was used to build the frontend of the website, Material-UI was used for the styling of the website, and Node.js and Express.js were used to build the backend of the website. The website has role management to allow different users to access different parts of the website. For example, users can submit reports on their van and truck usage and access important documents. There is a documents upload system for users to access important documents. My role was to create the frontend using React and Material-UI and the backend using Node.js and Express.js and work alongside other developers to create the end product.',
+	description:
+		'Comprehensive fleet management dashboard for Anglian Truck Tyres, enabling efficient vehicle tracking, reporting, and document management.',
+	what: 'Anglian Truck Tyres needed a comprehensive fleet management system to track their truck and van fleet operations. The platform required role-based access for different user types, automated report generation for vehicle usage, and a secure document management system for important fleet documentation. The system needed to provide insights into fleet utilization, maintenance scheduling, and operational efficiency while maintaining data security and user accountability.',
+	technologies: [
+		'React',
+		'TypeScript',
+		'Material-UI',
+		'Node.js',
+		'Express.js',
+		'JWT',
+		'PostgreSQL',
+		'AWS S3',
+		'bcrypt',
+	],
+	how: 'Developed a full-stack fleet management application using React with TypeScript and Material-UI for the frontend, creating intuitive dashboards for different user roles. Built a secure Node.js/Express.js backend with JWT authentication and role-based access control. Implemented a comprehensive reporting system that allows users to submit detailed vehicle usage reports with automated data aggregation and analytics. Created a secure document management system using AWS S3 for file storage, enabling users to upload, access, and manage important fleet documentation. The system includes user management, profile customization, and administrative oversight capabilities.',
 	conclusion:
-		'Anglian Truck Tyres was successfully created to a high standard and met the client requirements. The website is engaging and provides a seamless user experience. The website is built using React, Material-UI, Node.js, and Express.js. I successfully deepened my understanding on Node API structures and created a documents upload system for users to access important documents. I also created the user role management system to allow different users to access different parts of the website along with user management aspects of the dashboard to allow users and admins to manage their own/other profiles.',
+		'The Anglian Truck Tyres fleet management system successfully streamlined operations, providing comprehensive vehicle tracking and reporting capabilities. The project demonstrated expertise in building secure, role-based applications with complex data management requirements. Key achievements include implementing secure file storage systems, creating comprehensive reporting workflows, and building scalable user management solutions. The platform continues to improve fleet operational efficiency and data management for Anglian Truck Tyres.',
 };
 
 export default att;

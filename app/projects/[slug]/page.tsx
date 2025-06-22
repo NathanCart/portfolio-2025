@@ -21,6 +21,32 @@ export default function ProjectDetail() {
 		}
 	}, [params.slug]);
 
+	const handleBackToProjects = () => {
+		// Navigate to home page and scroll to projects section
+		router.push('/');
+		// Wait for navigation to complete before scrolling
+		setTimeout(() => {
+			const projectsElement = document.getElementById('projects');
+			if (projectsElement) {
+				projectsElement.scrollIntoView({ behavior: 'smooth' });
+			} else {
+				// Retry once more after a short delay in case DOM wasn't ready
+				setTimeout(() => {
+					const retryElement = document.getElementById('projects');
+					if (retryElement) {
+						retryElement.scrollIntoView({ behavior: 'smooth' });
+					} else {
+						// Final fallback: scroll to a position where projects should be
+						window.scrollTo({
+							top: window.innerHeight * 2.5, // Approximate position of projects section
+							behavior: 'smooth',
+						});
+					}
+				}, 200);
+			}
+		}, 500); // Increased timeout to ensure navigation completes
+	};
+
 	if (loading) {
 		return (
 			<div className="min-h-screen bg-zinc-900 flex items-center justify-center">
@@ -57,7 +83,7 @@ export default function ProjectDetail() {
 					speed={0.1}
 					particleBaseSize={100}
 					moveParticlesOnHover={true}
-					alphaParticles={false}
+					alphaParticles={true}
 					disableRotation={false}
 				/>
 			</div>
@@ -65,10 +91,10 @@ export default function ProjectDetail() {
 			<Navbar />
 
 			{/* Back Button */}
-			<div className="relative z-10 pt-24 px-4 sm:px-6 lg:px-8">
+			<div className="relative z-10 pt-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
 				<button
-					onClick={() => router.back()}
-					className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors duration-300 mb-8 group"
+					onClick={handleBackToProjects}
+					className="flex cursor-pointer items-center gap-2 text-zinc-400 hover:text-white transition-colors duration-300 mb-8 group"
 				>
 					<svg
 						className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1"
@@ -91,23 +117,23 @@ export default function ProjectDetail() {
 			<div className="relative z-10 px-4 sm:px-6 lg:px-8 pb-16">
 				<div className="max-w-6xl mx-auto">
 					{/* Project Image */}
-					<div className="relative h-64 sm:h-80 lg:h-96 rounded-2xl overflow-hidden mb-8">
+					<div className="relative h-64 sm:h-80 lg:h-96 w-64 sm:w-80 lg:w-96 rounded-2xl overflow-hidden mb-8">
 						<Image
 							src={project.image}
 							alt={project.title}
 							fill
 							className="object-cover"
-							sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
+							sizes="(max-width: 640px) 256px, (max-width: 1024px) 320px, 384px"
 						/>
 						<div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-zinc-900/20 to-transparent" />
 					</div>
 
 					{/* Project Header */}
 					<div className="mb-12">
-						<h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
+						<h1 className="text-4xl sm:text-5xl font-black lg:text-6xl text-zinc-300 mb-4 uppercase">
 							{project.title}
 						</h1>
-						<p className="text-xl text-zinc-300 mb-6 max-w-3xl">
+						<p className="text-xl text-zinc-400 mb-6 max-w-3xl">
 							{project.description}
 						</p>
 
@@ -157,7 +183,7 @@ export default function ProjectDetail() {
 
 						{/* Technologies */}
 						<div className="mb-8">
-							<h3 className="text-lg font-semibold text-zinc-300 mb-4">
+							<h3 className="text-lg font-semibold text-zinc-400 mb-4 uppercase tracking-wide">
 								Technologies Used
 							</h3>
 							<div className="flex flex-wrap gap-3">
@@ -177,21 +203,27 @@ export default function ProjectDetail() {
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 						{/* What */}
 						<div>
-							<h2 className="text-2xl font-bold text-white mb-4">What</h2>
-							<p className="text-zinc-300 leading-relaxed">{project.what}</p>
+							<h2 className="text-2xl font-bold text-zinc-300 mb-4 uppercase tracking-wide">
+								What
+							</h2>
+							<p className="text-zinc-400 leading-relaxed">{project.what}</p>
 						</div>
 
 						{/* How */}
 						<div>
-							<h2 className="text-2xl font-bold text-white mb-4">How</h2>
-							<p className="text-zinc-300 leading-relaxed">{project.how}</p>
+							<h2 className="text-2xl font-bold text-zinc-300 mb-4 uppercase tracking-wide">
+								How
+							</h2>
+							<p className="text-zinc-400 leading-relaxed">{project.how}</p>
 						</div>
 					</div>
 
 					{/* Conclusion */}
 					<div className="mt-12 p-8 bg-gradient-to-r from-blue-600/10 to-purple-600/10 border border-blue-500/20 rounded-2xl">
-						<h2 className="text-2xl font-bold text-white mb-4">Conclusion</h2>
-						<p className="text-zinc-300 leading-relaxed">{project.conclusion}</p>
+						<h2 className="text-2xl font-bold text-zinc-300 mb-4 uppercase tracking-wide">
+							Conclusion
+						</h2>
+						<p className="text-zinc-400 leading-relaxed">{project.conclusion}</p>
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useEffect, MutableRefObject } from 'react';
-import { mat4, quat, vec2, vec3 } from 'gl-matrix';
+import { mat4, quat, vec2, vec3, vec4 } from 'gl-matrix';
 import { useRouter } from 'next/navigation';
 
 const discVertShaderSource = `#version 300 es
@@ -683,7 +683,7 @@ class InfiniteGridMenu {
 	private discGeo!: DiscGeometry;
 	private worldMatrix = mat4.create();
 	private tex: WebGLTexture | null = null;
-	private control!: ArcballControl;
+	public control!: ArcballControl;
 
 	private discLocations!: {
 		aModelPosition: number;
@@ -710,7 +710,7 @@ class InfiniteGridMenu {
 		buffer: WebGLBuffer | null;
 	};
 
-	private instancePositions: vec3[] = [];
+	public instancePositions: vec3[] = [];
 	private DISC_INSTANCE_COUNT = 0;
 	private atlasSize = 1;
 
@@ -1120,7 +1120,7 @@ class InfiniteGridMenu {
 		this.updateCameraMatrix();
 	}
 
-	private findNearestVertexIndex(): number {
+	public findNearestVertexIndex(): number {
 		const n = this.control.snapDirection;
 		const inversOrientation = quat.conjugate(quat.create(), this.control.orientation);
 		const nt = vec3.transformQuat(vec3.create(), n, inversOrientation);
@@ -1166,6 +1166,8 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
 	const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
 	const [isMoving, setIsMoving] = useState<boolean>(false);
 	const [hasInteracted, setHasInteracted] = useState<boolean>(false);
+	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
+	const [previewItem, setPreviewItem] = useState<MenuItem | null>(null);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -1177,6 +1179,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
 			const itemIndex = index % items.length;
 			const item = items[itemIndex];
 			setActiveItem(item);
+			setCurrentSlideIndex(itemIndex);
 		};
 
 		const handleMovementChange = (moving: boolean) => {
@@ -1192,8 +1195,12 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
 				items.length ? items : defaultItems,
 				handleActiveItem,
 				handleMovementChange,
-				(sk) => sk.run()
+				(sk) => {
+					sketch = sk;
+					sk.run();
+				}
 			);
+			menuRef.current = sketch;
 		}
 
 		const handleResize = () => {
@@ -1209,6 +1216,44 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, [items]);
+
+	// Update preview item when moving
+	useEffect(() => {
+		if (isMoving && menuRef.current) {
+			// Calculate which item is most directly facing the camera
+			const nearestIndex = menuRef.current.findNearestVertexIndex();
+			const previewIndex = nearestIndex % Math.max(1, items.length);
+			const previewItem = items[previewIndex];
+			setPreviewItem(previewItem);
+		} else {
+			setPreviewItem(null);
+		}
+	}, [isMoving, items]);
+
+	// Update preview during movement with animation frame
+	useEffect(() => {
+		if (!isMoving || !menuRef.current) return;
+
+		let animationId: number;
+
+		const updatePreview = () => {
+			if (menuRef.current && isMoving) {
+				const nearestIndex = menuRef.current.findNearestVertexIndex();
+				const previewIndex = nearestIndex % Math.max(1, items.length);
+				const previewItem = items[previewIndex];
+				setPreviewItem(previewItem);
+				animationId = requestAnimationFrame(updatePreview);
+			}
+		};
+
+		animationId = requestAnimationFrame(updatePreview);
+
+		return () => {
+			if (animationId) {
+				cancelAnimationFrame(animationId);
+			}
+		};
+	}, [isMoving, items]);
 
 	const handleButtonClick = () => {
 		if (!activeItem) return;
@@ -1236,10 +1281,89 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
 			{/* Bottom fade gradient overlay */}
 			<div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-zinc-900 via-zinc-900/80 to-transparent pointer-events-none z-10" />
 
+			{/* Current Slide Indicator */}
+			<div className="absolute top-8 left-1/2 transform -translate-x-1/2 pointer-events-none z-20">
+				<div className="bg-zinc-900/95 backdrop-blur-md border border-zinc-700/60 rounded-2xl px-6 py-3 text-center shadow-2xl relative overflow-hidden group">
+					{/* Animated background gradient */}
+					<div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse"></div>
+
+					{/* Glowing border effect */}
+					<div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
+
+					<div className="relative z-10">
+						<div className="flex items-center justify-center gap-3">
+							<span className="text-zinc-400 text-sm font-medium">
+								Slide {currentSlideIndex + 1} of {items.length || 1}
+							</span>
+							<div className="w-1 h-1 bg-zinc-600 rounded-full"></div>
+							<span className="text-zinc-300 font-semibold text-base">
+								{activeItem?.title || 'Loading...'}
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* Preview Indicator - Shows when moving */}
+			{isMoving && previewItem && (
+				<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-30">
+					<div className="bg-zinc-900/95 backdrop-blur-md border border-zinc-700/60 rounded-2xl px-8 py-6 text-center shadow-2xl relative overflow-hidden group animate-pulse">
+						{/* Animated background gradient */}
+						<div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-100 transition-opacity duration-700"></div>
+
+						{/* Glowing border effect */}
+						<div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/40 via-purple-500/40 to-pink-500/40 opacity-100 transition-opacity duration-500 blur-sm"></div>
+
+						{/* Floating particles */}
+						<div className="absolute inset-0 overflow-hidden">
+							<div className="absolute top-2 left-4 w-1 h-1 bg-blue-400 rounded-full animate-ping opacity-75"></div>
+							<div
+								className="absolute top-6 right-6 w-1 h-1 bg-purple-400 rounded-full animate-ping opacity-75"
+								style={{ animationDelay: '0.5s' }}
+							></div>
+							<div
+								className="absolute bottom-4 left-8 w-1 h-1 bg-pink-400 rounded-full animate-ping opacity-75"
+								style={{ animationDelay: '1s' }}
+							></div>
+						</div>
+
+						<div className="relative z-10">
+							{/* Large Slide Number */}
+							<div className="mb-4">
+								<span className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+									{(() => {
+										if (!menuRef.current) return '?';
+										const nearestIndex =
+											menuRef.current.findNearestVertexIndex();
+										const previewIndex =
+											nearestIndex % Math.max(1, items.length);
+										return previewIndex + 1;
+									})()}
+								</span>
+								<span className="text-zinc-400 text-lg font-medium ml-2">
+									of {items.length || 1}
+								</span>
+							</div>
+
+							<div className="flex items-center justify-center gap-3 mb-3">
+								<span className="text-blue-400 text-sm font-medium">Preview</span>
+								<div className="w-1 h-1 bg-zinc-600 rounded-full"></div>
+								<span className="text-zinc-300 font-semibold text-xl">
+									{previewItem.title}
+								</span>
+							</div>
+							<p className="text-zinc-400 text-sm max-w-xs">
+								{previewItem.description}
+							</p>
+						</div>
+					</div>
+				</div>
+			)}
+
 			{/* Click and drag instruction indicator */}
 			<div
 				className={`
-					absolute top-20 left-1/2 transform -translate-x-1/2 pointer-events-none z-20
+					absolute top-32 left-1/2 transform -translate-x-1/2 pointer-events-none z-20
 					transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
 					${hasInteracted ? 'opacity-0 translate-y-8 scale-95' : 'opacity-100 translate-y-0 scale-100'}
 				`}

@@ -9,6 +9,250 @@ import TextPressure from './components/TextPressure';
 import ScrollIndicator from './components/ScrollIndicator';
 import { useEffect, useState, useRef, useMemo } from 'react';
 
+// Skills Data Structure
+const skillsData = [
+	{
+		id: 'frontend',
+		title: 'Frontend Development',
+		icon: (
+			<svg
+				className="w-8 h-8 text-white"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth={2}
+					d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+				/>
+			</svg>
+		),
+		gradient: 'from-blue-500 to-purple-600',
+		hoverColor: 'blue',
+		skills: [
+			'React',
+			'Next.js',
+			'TypeScript',
+			'Tailwind CSS',
+			'MUI',
+			'shadcn/ui',
+			'Framer Motion',
+		],
+	},
+	{
+		id: 'backend',
+		title: 'Backend Development',
+		icon: (
+			<svg
+				className="w-8 h-8 text-white"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth={2}
+					d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
+				/>
+			</svg>
+		),
+		gradient: 'from-green-500 to-teal-600',
+		hoverColor: 'green',
+		skills: [
+			'Node.js',
+			'Express',
+			'GraphQL',
+			'REST APIs',
+			'WebSockets',
+			'Microservices',
+			'Serverless',
+			'JWT',
+			'OAuth',
+		],
+	},
+	{
+		id: 'database',
+		title: 'Database & Storage',
+		icon: (
+			<svg
+				className="w-8 h-8 text-white"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth={2}
+					d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
+				/>
+			</svg>
+		),
+		gradient: 'from-orange-500 to-red-600',
+		hoverColor: 'orange',
+		skills: [
+			'PostgreSQL',
+			'MongoDB',
+			'Supabase',
+			'Drizzle',
+			'Prisma',
+			'Mongoose',
+			'Database Design',
+			'Data Modeling',
+		],
+	},
+	{
+		id: 'devops',
+		title: 'DevOps & Tools',
+		icon: (
+			<svg
+				className="w-8 h-8 text-white"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth={2}
+					d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+				/>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth={2}
+					d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+				/>
+			</svg>
+		),
+		gradient: 'from-purple-500 to-pink-600',
+		hoverColor: 'purple',
+		skills: ['Git', 'AWS', 'Railway', 'Docker', 'Vercel', 'CI/CD'],
+	},
+	{
+		id: 'mobile',
+		title: 'Mobile Development',
+		icon: (
+			<svg
+				className="w-8 h-8 text-white"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth={2}
+					d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+				/>
+			</svg>
+		),
+		gradient: 'from-indigo-500 to-blue-600',
+		hoverColor: 'indigo',
+		skills: [
+			'React Native',
+			'Expo',
+			'App Store',
+			'PWA',
+			'Responsive Design',
+			'Mobile UI/UX',
+			'Push Notifications',
+			'Offline Support',
+			'Performance',
+			'Accessibility',
+		],
+	},
+	{
+		id: 'testing',
+		title: 'Testing & Quality',
+		icon: (
+			<svg
+				className="w-8 h-8 text-white"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth={2}
+					d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+				/>
+			</svg>
+		),
+		gradient: 'from-emerald-500 to-cyan-600',
+		hoverColor: 'emerald',
+		skills: ['Storybook', 'Playwright', 'ESLint', 'Prettier', 'Lighthouse', 'Semrush'],
+	},
+];
+
+// Helper function to get color classes
+const getColorClasses = (color: string) => {
+	const colorMap: {
+		[key: string]: {
+			border: string;
+			shadow: string;
+			text: string;
+			bg: string;
+			dot: string;
+			indicator: string;
+		};
+	} = {
+		blue: {
+			border: 'hover:border-blue-500/50',
+			shadow: 'hover:shadow-blue-500/20 group-hover:shadow-blue-500/50',
+			text: 'group-hover:text-blue-300',
+			bg: 'group-hover:bg-blue-500/10',
+			dot: 'group-hover:bg-blue-400',
+			indicator: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+		},
+		green: {
+			border: 'hover:border-green-500/50',
+			shadow: 'hover:shadow-green-500/20 group-hover:shadow-green-500/50',
+			text: 'group-hover:text-green-300',
+			bg: 'group-hover:bg-green-500/10',
+			dot: 'group-hover:bg-green-400',
+			indicator: 'bg-green-500/20 text-green-300 border-green-500/30',
+		},
+		orange: {
+			border: 'hover:border-orange-500/50',
+			shadow: 'hover:shadow-orange-500/20 group-hover:shadow-orange-500/50',
+			text: 'group-hover:text-orange-300',
+			bg: 'group-hover:bg-orange-500/10',
+			dot: 'group-hover:bg-orange-400',
+			indicator: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
+		},
+		purple: {
+			border: 'hover:border-purple-500/50',
+			shadow: 'hover:shadow-purple-500/20 group-hover:shadow-purple-500/50',
+			text: 'group-hover:text-purple-300',
+			bg: 'group-hover:bg-purple-500/10',
+			dot: 'group-hover:bg-purple-400',
+			indicator: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+		},
+		indigo: {
+			border: 'hover:border-indigo-500/50',
+			shadow: 'hover:shadow-indigo-500/20 group-hover:shadow-indigo-500/50',
+			text: 'group-hover:text-indigo-300',
+			bg: 'group-hover:bg-indigo-500/10',
+			dot: 'group-hover:bg-indigo-400',
+			indicator: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30',
+		},
+		emerald: {
+			border: 'hover:border-emerald-500/50',
+			shadow: 'hover:shadow-emerald-500/20 group-hover:shadow-emerald-500/50',
+			text: 'group-hover:text-emerald-300',
+			bg: 'group-hover:bg-emerald-500/10',
+			dot: 'group-hover:bg-emerald-400',
+			indicator: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+		},
+	};
+	return colorMap[color] || colorMap.blue;
+};
+
 // Social Media Links Component
 const SocialLinks = ({ className = '' }: { className?: string }) => (
 	<div className={`flex gap-4 ${className} pointer-events-auto`}>
@@ -53,6 +297,52 @@ const SocialLinks = ({ className = '' }: { className?: string }) => (
 		</a>
 	</div>
 );
+
+// Skill Card Component
+const SkillCard = ({ skill }: { skill: (typeof skillsData)[0] }) => {
+	const colorMap = {
+		blue: 'blue',
+		green: 'green',
+		orange: 'orange',
+		purple: 'purple',
+		indigo: 'indigo',
+		emerald: 'emerald',
+	};
+
+	const color = colorMap[skill.hoverColor as keyof typeof colorMap];
+
+	return (
+		<div className="group">
+			<div
+				className={`bg-zinc-800/80 border border-zinc-700/50 rounded-2xl p-8 hover:border-${color}-500/50 transition-all duration-300 hover:bg-zinc-800/90 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-${color}-500/20 hover:shadow-lg`}
+			>
+				<div
+					className={`flex items-center justify-center w-16 h-16 bg-gradient-to-br ${skill.gradient} rounded-xl mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-${color}-500/50`}
+				>
+					{skill.icon}
+				</div>
+				<h3
+					className={`text-2xl font-bold text-zinc-300 mb-4 group-hover:text-${color}-300 transition-colors duration-300`}
+				>
+					{skill.title}
+				</h3>
+				<div className="space-y-3">
+					{skill.skills.map((skillName, index) => (
+						<div
+							key={index}
+							className={`flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-${color}-500/10`}
+						>
+							<span className="text-zinc-300 font-medium">{skillName}</span>
+							<div
+								className={`w-2 h-2 bg-green-400 rounded-full group-hover:bg-${color}-400 transition-colors duration-300`}
+							></div>
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+};
 
 export default function Home() {
 	const [scrollY, setScrollY] = useState(0);
@@ -251,273 +541,68 @@ export default function Home() {
 
 					{/* Skills Grid */}
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-						{/* Frontend Development */}
-						<div className="group">
-							<div className="bg-zinc-800/80 border border-zinc-700/50 rounded-2xl p-8 hover:border-blue-500/50 transition-all duration-300 hover:bg-zinc-800/90 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 hover:shadow-lg">
-								<div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/50">
-									<svg
-										className="w-8 h-8 text-white"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-										/>
-									</svg>
-								</div>
-								<h3 className="text-2xl font-bold text-zinc-300 mb-4 group-hover:text-blue-300 transition-colors duration-300">
-									Frontend Development
-								</h3>
-								<div className="space-y-3">
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-blue-500/10">
-										<span className="text-zinc-300 font-medium">React</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-blue-500/10">
-										<span className="text-zinc-300 font-medium">Next.js</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-blue-500/10">
-										<span className="text-zinc-300 font-medium">
-											TypeScript
-										</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-blue-500/10">
-										<span className="text-zinc-300 font-medium">
-											Tailwind CSS
-										</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
-									</div>
-								</div>
-							</div>
-						</div>
+						{skillsData.map((skill) => {
+							const colors = getColorClasses(skill.hoverColor);
+							const visibleSkills = skill.skills.slice(0, 5);
+							const hiddenSkills = skill.skills.slice(5);
 
-						{/* Backend Development */}
-						<div className="group">
-							<div className="bg-zinc-800/80 border border-zinc-700/50 rounded-2xl p-8 hover:border-green-500/50 transition-all duration-300 hover:bg-zinc-800/90 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 hover:shadow-lg">
-								<div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-xl mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-green-500/50">
-									<svg
-										className="w-8 h-8 text-white"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
+							return (
+								<div key={skill.id} className="group">
+									<div
+										className={`bg-zinc-800/80 border border-zinc-700/50 rounded-2xl p-8 ${colors.border} transition-all duration-300 hover:bg-zinc-800/90 hover:transform hover:scale-105 hover:shadow-2xl ${colors.shadow} hover:shadow-lg relative overflow-hidden`}
 									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
-										/>
-									</svg>
-								</div>
-								<h3 className="text-2xl font-bold text-zinc-300 mb-4 group-hover:text-green-300 transition-colors duration-300">
-									Backend Development
-								</h3>
-								<div className="space-y-3">
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-green-500/10">
-										<span className="text-zinc-300 font-medium">Node.js</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-green-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-green-500/10">
-										<span className="text-zinc-300 font-medium">Express</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-green-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-green-500/10">
-										<span className="text-zinc-300 font-medium">Python</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-green-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-green-500/10">
-										<span className="text-zinc-300 font-medium">Django</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-green-400 transition-colors duration-300"></div>
-									</div>
-								</div>
-							</div>
-						</div>
+										<div
+											className={`flex items-center justify-center w-16 h-16 bg-gradient-to-br ${skill.gradient} rounded-xl mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg ${colors.shadow}`}
+										>
+											{skill.icon}
+										</div>
+										<h3
+											className={`text-2xl font-bold text-zinc-300 mb-4 ${colors.text} transition-colors duration-300`}
+										>
+											{skill.title}
+										</h3>
 
-						{/* Database & Storage */}
-						<div className="group">
-							<div className="bg-zinc-800/80 border border-zinc-700/50 rounded-2xl p-8 hover:border-orange-500/50 transition-all duration-300 hover:bg-zinc-800/90 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20 hover:shadow-lg">
-								<div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-orange-500/50">
-									<svg
-										className="w-8 h-8 text-white"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
-										/>
-									</svg>
-								</div>
-								<h3 className="text-2xl font-bold text-zinc-300 mb-4 group-hover:text-orange-300 transition-colors duration-300">
-									Database & Storage
-								</h3>
-								<div className="space-y-3">
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-orange-500/10">
-										<span className="text-zinc-300 font-medium">MongoDB</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-orange-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-orange-500/10">
-										<span className="text-zinc-300 font-medium">
-											PostgreSQL
-										</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-orange-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-orange-500/10">
-										<span className="text-zinc-300 font-medium">MySQL</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-orange-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-orange-500/10">
-										<span className="text-zinc-300 font-medium">Redis</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-orange-400 transition-colors duration-300"></div>
-									</div>
-								</div>
-							</div>
-						</div>
+										{/* Skills Container - Scrollable */}
+										<div className="relative h-[260px]">
+											{/* All Skills - Scrollable */}
+											<div className="space-y-3 h-full overflow-y-auto pr-2 pb-8 scrollbar-thin scrollbar-thumb-zinc-600 scrollbar-track-zinc-800">
+												{skill.skills.map((skillName, index) => (
+													<div
+														key={index}
+														className={`flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 ${colors.bg}`}
+													>
+														<span className="text-zinc-300 font-medium">
+															{skillName}
+														</span>
+														<div
+															className={`w-2 h-2 bg-green-400 rounded-full ${colors.dot} transition-colors duration-300`}
+														></div>
+													</div>
+												))}
+											</div>
 
-						{/* DevOps & Tools */}
-						<div className="group">
-							<div className="bg-zinc-800/80 border border-zinc-700/50 rounded-2xl p-8 hover:border-purple-500/50 transition-all duration-300 hover:bg-zinc-800/90 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20 hover:shadow-lg">
-								<div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/50">
-									<svg
-										className="w-8 h-8 text-white"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-										/>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-										/>
-									</svg>
-								</div>
-								<h3 className="text-2xl font-bold text-zinc-300 mb-4 group-hover:text-purple-300 transition-colors duration-300">
-									DevOps & Tools
-								</h3>
-								<div className="space-y-3">
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-purple-500/10">
-										<span className="text-zinc-300 font-medium">Git</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-purple-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-purple-500/10">
-										<span className="text-zinc-300 font-medium">Docker</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-purple-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-purple-500/10">
-										<span className="text-zinc-300 font-medium">AWS</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-purple-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-purple-500/10">
-										<span className="text-zinc-300 font-medium">Vercel</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-purple-400 transition-colors duration-300"></div>
-									</div>
-								</div>
-							</div>
-						</div>
+											{/* "More Skills" Badge - Positioned outside skills area */}
+											{hiddenSkills.length > 0 && (
+												<div className="absolute -bottom-2 -right-2">
+													<div className="px-3 py-1.5 rounded-full text-sm font-medium bg-zinc-700/90 text-zinc-300 border border-zinc-600 shadow-lg">
+														+{hiddenSkills.length} more
+													</div>
+												</div>
+											)}
 
-						{/* Mobile Development */}
-						<div className="group">
-							<div className="bg-zinc-800/80 border border-zinc-700/50 rounded-2xl p-8 hover:border-indigo-500/50 transition-all duration-300 hover:bg-zinc-800/90 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-indigo-500/20 hover:shadow-lg">
-								<div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-indigo-500/50">
-									<svg
-										className="w-8 h-8 text-white"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-										/>
-									</svg>
-								</div>
-								<h3 className="text-2xl font-bold text-zinc-300 mb-4 group-hover:text-indigo-300 transition-colors duration-300">
-									Mobile Development
-								</h3>
-								<div className="space-y-3">
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-indigo-500/10">
-										<span className="text-zinc-300 font-medium">
-											React Native
-										</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-indigo-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-indigo-500/10">
-										<span className="text-zinc-300 font-medium">Expo</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-indigo-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-indigo-500/10">
-										<span className="text-zinc-300 font-medium">PWA</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-indigo-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-indigo-500/10">
-										<span className="text-zinc-300 font-medium">
-											Responsive Design
-										</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-indigo-400 transition-colors duration-300"></div>
+											{/* Scroll hint - positioned at bottom left */}
+											{hiddenSkills.length > 0 && (
+												<div className="absolute -bottom-2 -left-2">
+													<div className="px-3 py-1.5 rounded-full text-sm font-medium bg-zinc-700/90 text-zinc-400 border border-zinc-600 shadow-lg">
+														Scroll to see more skills
+													</div>
+												</div>
+											)}
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-
-						{/* Testing & Quality */}
-						<div className="group">
-							<div className="bg-zinc-800/80 border border-zinc-700/50 rounded-2xl p-8 hover:border-emerald-500/50 transition-all duration-300 hover:bg-zinc-800/90 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20 hover:shadow-lg">
-								<div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500 to-cyan-600 rounded-xl mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-emerald-500/50">
-									<svg
-										className="w-8 h-8 text-white"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-										/>
-									</svg>
-								</div>
-								<h3 className="text-2xl font-bold text-zinc-300 mb-4 group-hover:text-emerald-300 transition-colors duration-300">
-									Testing & Quality
-								</h3>
-								<div className="space-y-3">
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-emerald-500/10">
-										<span className="text-zinc-300 font-medium">Jest</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-emerald-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-emerald-500/10">
-										<span className="text-zinc-300 font-medium">Cypress</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-emerald-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-emerald-500/10">
-										<span className="text-zinc-300 font-medium">ESLint</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-emerald-400 transition-colors duration-300"></div>
-									</div>
-									<div className="flex items-center justify-between p-3 bg-zinc-700/30 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200 group-hover:bg-emerald-500/10">
-										<span className="text-zinc-300 font-medium">Prettier</span>
-										<div className="w-2 h-2 bg-green-400 rounded-full group-hover:bg-emerald-400 transition-colors duration-300"></div>
-									</div>
-								</div>
-							</div>
-						</div>
+							);
+						})}
 					</div>
 
 					{/* Call to Action */}

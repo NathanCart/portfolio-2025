@@ -247,7 +247,12 @@ const ProjectBubbles: FC<ProjectBubblesProps> = ({ projects, className = '' }) =
 										x: x - (isMobile ? 25 : 35), // Center the larger bubble
 										y: y - (isMobile ? 25 : 35), // Center the larger bubble
 									}}
-									exit={{ scale: 0, opacity: 0, x: centerX, y: centerY }}
+									exit={{
+										scale: 0,
+										opacity: 0,
+										x: x - (isMobile ? 25 : 35),
+										y: y - (isMobile ? 25 : 35),
+									}}
 									transition={{
 										delay: 0.1 + index * 0.02,
 										duration: 0.25,

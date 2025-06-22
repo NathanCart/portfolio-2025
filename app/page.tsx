@@ -9,6 +9,7 @@ import TextPressure from './components/TextPressure';
 import ScrollIndicator from './components/ScrollIndicator';
 import InfiniteMenu from './components/InfiniteMenu';
 import ProjectCards from './components/ProjectCards';
+import ProjectBubbles from './components/ProjectBubbles';
 import { useIsMobile } from './hooks/useIsMobile';
 import { useEffect, useState, useRef, useMemo } from 'react';
 import projects from './projects';
@@ -744,6 +745,16 @@ export default function Home() {
 					)}
 				</div>
 			</section>
+
+			{/* Project Navigation Bubbles */}
+			<ProjectBubbles
+				projects={projectsData.map((project) => ({
+					slug: project.slug || '',
+					title: project.title,
+					image: project.image,
+					description: project.description,
+				}))}
+			/>
 		</main>
 	);
 }

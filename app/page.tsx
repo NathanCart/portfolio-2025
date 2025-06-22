@@ -9,6 +9,7 @@ import TextPressure from './components/TextPressure';
 import ScrollIndicator from './components/ScrollIndicator';
 import InfiniteMenu from './components/InfiniteMenu';
 import { useEffect, useState, useRef, useMemo } from 'react';
+import projects from './projects';
 
 // Skills Data Structure
 const skillsData = [
@@ -463,6 +464,16 @@ export default function Home() {
 		),
 		[]
 	); // Empty dependency array ensures this only runs once on mount
+
+	// Transform projects data for InfiniteMenu
+	const projectsData = useMemo(() => {
+		return projects.map((project) => ({
+			image: project.image,
+			link: project.hosted || project.github || '#',
+			title: project.title,
+			description: project.description,
+		}));
+	}, []);
 
 	return (
 		<main className="min-h-screen relative overflow-hidden bg-zinc-900">

@@ -6,6 +6,7 @@ export default function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
+	const [isOverProjects, setIsOverProjects] = useState(false);
 	const router = useRouter();
 	const pathname = usePathname();
 	const isHomePage = pathname === '/';
@@ -24,6 +25,14 @@ export default function Navbar() {
 	useEffect(() => {
 		const handleScroll = () => {
 			setIsScrolled(window.scrollY > 50);
+
+			// Check if we're over the projects section
+			const projectsSection = document.getElementById('projects');
+			if (projectsSection) {
+				const rect = projectsSection.getBoundingClientRect();
+				const isOver = rect.top <= 100 && rect.bottom >= 100;
+				setIsOverProjects(isOver);
+			}
 		};
 
 		window.addEventListener('scroll', handleScroll);
@@ -110,11 +119,11 @@ export default function Navbar() {
 
 	return (
 		<nav
-			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out cursor-pointer ${
 				isScrolled
 					? 'bg-zinc-900/95 backdrop-blur-md border-b border-zinc-800'
 					: 'bg-transparent'
-			}`}
+			} ${isOverProjects ? '-translate-y-full' : 'translate-y-0'}`}
 		>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-center h-20">
@@ -122,36 +131,36 @@ export default function Navbar() {
 					<div className="hidden md:flex items-center space-x-2">
 						<button
 							onClick={() => scrollToSection('about')}
-							className={`relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-700 transform ${
+							className={`group relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-700 transform ${
 								isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-							}`}
+							} hover:scale-105 hover:bg-zinc-800/30 rounded-lg cursor-pointer`}
 							style={{ transitionDelay: '0.1s' }}
 						>
 							<span className="relative z-10">About</span>
-							<div className="absolute inset-0 bg-zinc-800/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-							<div className="absolute bottom-0 left-1/2 w-0 h-1 bg-white group-hover:w-full group-hover:left-0 transition-all duration-300"></div>
+							<div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+							<div className="absolute bottom-0 left-1/2 w-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
 						</button>
 						<button
 							onClick={() => scrollToSection('skills')}
-							className={`relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-700 transform ${
+							className={`group relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-700 transform ${
 								isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-							}`}
+							} hover:scale-105 hover:bg-zinc-800/30 rounded-lg cursor-pointer`}
 							style={{ transitionDelay: '0.2s' }}
 						>
 							<span className="relative z-10">Skills</span>
-							<div className="absolute inset-0 bg-zinc-800/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-							<div className="absolute bottom-0 left-1/2 w-0 h-1 bg-white group-hover:w-full group-hover:left-0 transition-all duration-300"></div>
+							<div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-teal-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+							<div className="absolute bottom-0 left-1/2 w-0 h-1 bg-gradient-to-r from-green-500 to-teal-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
 						</button>
 						<button
 							onClick={() => scrollToSection('projects')}
-							className={`relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-700 transform ${
+							className={`group relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-700 transform ${
 								isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-							}`}
+							} hover:scale-105 hover:bg-zinc-800/30 rounded-lg cursor-pointer`}
 							style={{ transitionDelay: '0.3s' }}
 						>
 							<span className="relative z-10">Projects</span>
-							<div className="absolute inset-0 bg-zinc-800/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-							<div className="absolute bottom-0 left-1/2 w-0 h-1 bg-white group-hover:w-full group-hover:left-0 transition-all duration-300"></div>
+							<div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+							<div className="absolute bottom-0 left-1/2 w-0 h-1 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
 						</button>
 					</div>
 
@@ -160,9 +169,9 @@ export default function Navbar() {
 						<button
 							ref={mobileButtonRef}
 							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-							className={`text-zinc-300 hover:text-white p-3 rounded-lg hover:bg-zinc-800/50 transition-all duration-700 transform ${
+							className={`group text-zinc-300 hover:text-white p-3 rounded-lg hover:bg-zinc-800/50 transition-all duration-700 transform ${
 								isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-							}`}
+							} hover:scale-110 cursor-pointer`}
 							style={{ transitionDelay: '0.1s' }}
 							aria-label="Toggle mobile menu"
 						>
@@ -195,24 +204,24 @@ export default function Navbar() {
 					<div className="pb-4 space-y-2 bg-zinc-900/95 backdrop-blur-md rounded-lg border border-zinc-800/50 mt-2">
 						<button
 							onClick={() => scrollToSection('about')}
-							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group relative"
+							className="group w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 relative hover:scale-105 cursor-pointer"
 						>
 							<span className="relative z-10">About</span>
-							<div className="absolute bottom-0 left-0 w-0 h-1 bg-white group-hover:w-full transition-all duration-300"></div>
+							<div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-300 rounded-full"></div>
 						</button>
 						<button
 							onClick={() => scrollToSection('skills')}
-							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group relative"
+							className="group w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 relative hover:scale-105 cursor-pointer"
 						>
 							<span className="relative z-10">Skills</span>
-							<div className="absolute bottom-0 left-0 w-0 h-1 bg-white group-hover:w-full transition-all duration-300"></div>
+							<div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-green-500 to-teal-500 group-hover:w-full transition-all duration-300 rounded-full"></div>
 						</button>
 						<button
 							onClick={() => scrollToSection('projects')}
-							className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 group relative"
+							className="group w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 relative hover:scale-105 cursor-pointer"
 						>
 							<span className="relative z-10">Projects</span>
-							<div className="absolute bottom-0 left-0 w-0 h-1 bg-white group-hover:w-full transition-all duration-300"></div>
+							<div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full transition-all duration-300 rounded-full"></div>
 						</button>
 					</div>
 				</div>

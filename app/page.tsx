@@ -6,6 +6,7 @@ import SplitText from './components/SplitText';
 import BlobCursor from './components/BlogCursor';
 import Navbar from './components/Navbar';
 import TextPressure from './components/TextPressure';
+import ScrollIndicator from './components/ScrollIndicator';
 import { useEffect, useState, useRef, useMemo } from 'react';
 
 export default function Home() {
@@ -142,6 +143,9 @@ export default function Home() {
 				/>
 
 				{heroContent}
+
+				{/* Scroll Down Indicator */}
+				<ScrollIndicator />
 			</div>
 
 			{/* About Section - Parallax Effect */}
@@ -161,7 +165,7 @@ export default function Home() {
 				}}
 			>
 				<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-					<div style={{ position: 'relative', height: '300px' }}>
+					<div style={{ position: 'relative', height: '30vw', maxHeight: '220px' }}>
 						<TextPressure
 							text="About Me"
 							flex={true}
@@ -175,18 +179,24 @@ export default function Home() {
 							minFontSize={36}
 						/>
 					</div>
-					<div className="text-xl text-zinc-400 leading-relaxed space-y-6">
+					<div className="text-base md:text-xl text-zinc-400 leading-relaxed space-y-6 font-medium max-w-3xl">
 						<p>
 							I'm a Full Stack Software Developer with near 3 years of professional
-							experience. I specialize in building seamless web and mobile
-							experiences.
+							experience. I specialize in building seamless web and mobile experiences
+							for companies ranging from local startups to large enterprises such as
+							Meta and Samsung.
+						</p>
+						<p>
+							With a passion for building applications that are not only functional,
+							but also beautiful and user-friendly. Always on the lookout for new
+							challenges and opportunities to grow as a developer.
 						</p>
 					</div>
 				</div>
 			</section>
 
 			{/* Spacer to create scroll space */}
-			<div style={{ height: '100vh' }}></div>
+			<div style={{ height: '150vh' }}></div>
 
 			{/* Skills Section */}
 			<section

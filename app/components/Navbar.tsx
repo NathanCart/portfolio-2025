@@ -17,7 +17,7 @@ export default function Navbar() {
 		if (sectionId === 'about') {
 			// For the about section, scroll to a position that shows the About section properly
 			window.scrollTo({
-				top: window.innerHeight * 1.2,
+				top: window.innerHeight * 0.8,
 				behavior: 'smooth',
 			});
 		} else {

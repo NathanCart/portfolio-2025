@@ -134,7 +134,7 @@ const ProjectBubbles: FC<ProjectBubblesProps> = ({ projects, className = '' }) =
 								strokeLinecap="round"
 								strokeLinejoin="round"
 								strokeWidth={2}
-								d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+								d="M12 4v16m8-8H4"
 							/>
 						</svg>
 					)}
@@ -250,8 +250,6 @@ const ProjectBubbles: FC<ProjectBubblesProps> = ({ projects, className = '' }) =
 									exit={{
 										scale: 0,
 										opacity: 0,
-										x: x - (isMobile ? 25 : 35),
-										y: y - (isMobile ? 25 : 35),
 									}}
 									transition={{
 										delay: 0.1 + index * 0.02,

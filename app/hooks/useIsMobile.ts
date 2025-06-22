@@ -5,6 +5,9 @@ export const useIsMobile = () => {
 
 	useEffect(() => {
 		const checkIsMobile = () => {
+			// Check if we're in the browser environment
+			if (typeof window === 'undefined') return;
+
 			// Check for mobile devices using screen width and user agent
 			const isMobileByWidth = window.innerWidth < 1440;
 			const isMobileByAgent =

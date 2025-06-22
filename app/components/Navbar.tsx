@@ -14,9 +14,18 @@ export default function Navbar() {
 	}, []);
 
 	const scrollToSection = (sectionId: string) => {
-		const element = document.getElementById(sectionId);
-		if (element) {
-			element.scrollIntoView({ behavior: 'smooth' });
+		if (sectionId === 'about') {
+			// For the about section, scroll to a position that shows the About section properly
+			window.scrollTo({
+				top: window.innerHeight * 1.2,
+				behavior: 'smooth',
+			});
+		} else {
+			// For other sections, use normal scroll behavior
+			const element = document.getElementById(sectionId);
+			if (element) {
+				element.scrollIntoView({ behavior: 'smooth' });
+			}
 		}
 	};
 

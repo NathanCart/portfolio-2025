@@ -52,8 +52,10 @@ const discFragShaderSource = `#version 300 es
 precision highp float;
 
 uniform sampler2D uTex;
+uniform sampler2D uTextTex;
 uniform int uItemCount;
 uniform int uAtlasSize;
+uniform bool uShowText;
 
 out vec4 outColor;
 
@@ -82,7 +84,29 @@ void main() {
     st = clamp(st, 0.0, 1.0);
     st = st * cellSize + cellOffset;
     
-    outColor = texture(uTex, st);
+    vec4 imageColor = texture(uTex, st);
+    
+    // Add text overlay if enabled
+    if (uShowText) {
+        // Create a circular mask for the text that covers the whole bubble
+        vec2 center = vec2(0.5, 0.5);
+        vec2 uv = vUvs - center;
+        float dist = length(uv);
+        float circleMask = smoothstep(0.7, 0.6, dist);
+        
+        if (circleMask > 0.0) {
+            // Use the same atlas coordinates for text texture, but flip Y coordinate
+            vec2 textSt = vec2(vUvs.x, 1.0 - vUvs.y) * cellSize + cellOffset;
+            vec4 textColor = texture(uTextTex, textSt);
+            
+            // Blend text over image with circular mask
+            if (textColor.a > 0.1) {
+                imageColor = mix(imageColor, textColor, textColor.a * circleMask * 0.8);
+            }
+        }
+    }
+    
+    outColor = imageColor;
     outColor.a *= vAlpha;
 }
 `;
@@ -683,6 +707,7 @@ class InfiniteGridMenu {
 	private discGeo!: DiscGeometry;
 	private worldMatrix = mat4.create();
 	private tex: WebGLTexture | null = null;
+	private textTex: WebGLTexture | null = null;
 	public control!: ArcballControl;
 
 	private discLocations!: {
@@ -696,9 +721,11 @@ class InfiniteGridMenu {
 		uScaleFactor: WebGLUniformLocation | null;
 		uRotationAxisVelocity: WebGLUniformLocation | null;
 		uTex: WebGLUniformLocation | null;
+		uTextTex: WebGLUniformLocation | null;
 		uFrames: WebGLUniformLocation | null;
 		uItemCount: WebGLUniformLocation | null;
 		uAtlasSize: WebGLUniformLocation | null;
+		uShowText: WebGLUniformLocation | null;
 	};
 
 	private viewportSize = vec2.create();
@@ -807,9 +834,11 @@ class InfiniteGridMenu {
 				'uRotationAxisVelocity'
 			),
 			uTex: gl.getUniformLocation(this.discProgram!, 'uTex'),
+			uTextTex: gl.getUniformLocation(this.discProgram!, 'uTextTex'),
 			uFrames: gl.getUniformLocation(this.discProgram!, 'uFrames'),
 			uItemCount: gl.getUniformLocation(this.discProgram!, 'uItemCount'),
 			uAtlasSize: gl.getUniformLocation(this.discProgram!, 'uAtlasSize'),
+			uShowText: gl.getUniformLocation(this.discProgram!, 'uShowText'),
 		};
 
 		this.discGeo = new DiscGeometry(56, 1);
@@ -862,6 +891,14 @@ class InfiniteGridMenu {
 			gl.CLAMP_TO_EDGE
 		);
 
+		this.textTex = createAndSetupTexture(
+			gl,
+			gl.LINEAR,
+			gl.LINEAR,
+			gl.CLAMP_TO_EDGE,
+			gl.CLAMP_TO_EDGE
+		);
+
 		const itemCount = Math.max(1, this.items.length);
 		this.atlasSize = Math.ceil(Math.sqrt(itemCount));
 		const cellSize = 512;
@@ -869,6 +906,12 @@ class InfiniteGridMenu {
 		const ctx = canvas.getContext('2d')!;
 		canvas.width = this.atlasSize * cellSize;
 		canvas.height = this.atlasSize * cellSize;
+
+		// Create text texture canvas
+		const textCanvas = document.createElement('canvas');
+		const textCtx = textCanvas.getContext('2d')!;
+		textCanvas.width = this.atlasSize * cellSize;
+		textCanvas.height = this.atlasSize * cellSize;
 
 		Promise.all(
 			this.items.map(
@@ -920,10 +963,36 @@ class InfiniteGridMenu {
 
 				// Draw the temp canvas to the main canvas at the correct position
 				ctx.drawImage(tempCanvas, x, y);
+
+				// Create text overlay for this cell
+				const textTempCanvas = document.createElement('canvas');
+				const textTempCtx = textTempCanvas.getContext('2d')!;
+				textTempCanvas.width = cellSize;
+				textTempCanvas.height = cellSize;
+
+				// Set text style
+				textTempCtx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+				textTempCtx.fillRect(0, 0, cellSize, cellSize);
+
+				// Add project number text
+				textTempCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+				textTempCtx.font = 'bold 96px Figtree, Arial, sans-serif';
+				textTempCtx.textAlign = 'center';
+				textTempCtx.textBaseline = 'middle';
+
+				const projectNumber = (i + 1).toString();
+				textTempCtx.fillText(projectNumber, cellSize / 2, cellSize / 2);
+
+				// Draw text to text canvas
+				textCtx.drawImage(textTempCanvas, x, y);
 			});
 
 			gl.bindTexture(gl.TEXTURE_2D, this.tex);
 			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
+			gl.generateMipmap(gl.TEXTURE_2D);
+
+			gl.bindTexture(gl.TEXTURE_2D, this.textTex);
+			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textCanvas);
 			gl.generateMipmap(gl.TEXTURE_2D);
 		});
 	}
@@ -1049,9 +1118,15 @@ class InfiniteGridMenu {
 		gl.uniform1f(this.discLocations.uFrames, this._frames);
 		gl.uniform1f(this.discLocations.uScaleFactor, this.scaleFactor);
 
+		// Show text only when moving
+		gl.uniform1i(this.discLocations.uShowText, this.movementActive ? 1 : 0);
+
 		gl.uniform1i(this.discLocations.uTex, 0);
+		gl.uniform1i(this.discLocations.uTextTex, 1);
 		gl.activeTexture(gl.TEXTURE0);
 		gl.bindTexture(gl.TEXTURE_2D, this.tex);
+		gl.activeTexture(gl.TEXTURE1);
+		gl.bindTexture(gl.TEXTURE_2D, this.textTex);
 
 		gl.bindVertexArray(this.discVAO);
 		gl.drawElementsInstanced(

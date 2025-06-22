@@ -26,10 +26,11 @@ const ProjectBubbles: FC<ProjectBubblesProps> = ({ projects, className = '' }) =
 	const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 	const [isMounted, setIsMounted] = useState(false);
 
-	// Handle mounting and initial visibility
+	// Handle mounting and initial visibility - reduced delay for better UX
 	useEffect(() => {
 		setIsMounted(true);
-		const timer = setTimeout(() => setIsVisible(true), 800);
+		// Reduced delay from 800ms to 300ms for faster initial appearance
+		const timer = setTimeout(() => setIsVisible(true), 300);
 		return () => clearTimeout(timer);
 	}, []);
 
@@ -91,10 +92,7 @@ const ProjectBubbles: FC<ProjectBubblesProps> = ({ projects, className = '' }) =
 		return { width, height };
 	};
 
-	// Don't render until mounted to prevent hydration issues
-	if (!isMounted) return null;
-	if (!isVisible) return null;
-
+	// Always render the container to prevent layout shifts, but control visibility
 	const layoutConfig = getLayoutConfig();
 	const containerSize = getContainerSize();
 
@@ -103,12 +101,24 @@ const ProjectBubbles: FC<ProjectBubblesProps> = ({ projects, className = '' }) =
 			className={`fixed ${
 				isMobile ? 'bottom-4 right-4' : 'bottom-6 right-6'
 			} z-50 ${className}`}
+			style={{
+				// Ensure the container is always positioned correctly
+				visibility: isMounted ? 'visible' : 'hidden',
+			}}
 		>
 			{/* Main toggle button */}
 			<motion.button
 				initial={{ scale: 0, opacity: 0 }}
-				animate={{ scale: 1, opacity: 1 }}
-				transition={{ delay: 0.1, duration: 0.3, type: 'spring', stiffness: 300 }}
+				animate={{
+					scale: isVisible ? 1 : 0,
+					opacity: isVisible ? 1 : 0,
+				}}
+				transition={{
+					delay: isVisible ? 0.1 : 0,
+					duration: 0.3,
+					type: 'spring',
+					stiffness: 300,
+				}}
 				onClick={toggleExpanded}
 				className={`relative ${
 					isMobile ? 'w-auto px-3 py-2' : 'w-auto px-4 py-3'

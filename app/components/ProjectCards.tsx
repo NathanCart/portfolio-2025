@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface ProjectCardProps {
 	image: string;
@@ -7,15 +8,26 @@ interface ProjectCardProps {
 	title: string;
 	description: string;
 	technologies?: string[];
+	slug?: string;
 }
 
-const ProjectCard: FC<ProjectCardProps> = ({ image, link, title, description, technologies }) => {
+const ProjectCard: FC<ProjectCardProps> = ({
+	image,
+	link,
+	title,
+	description,
+	technologies,
+	slug,
+}) => {
+	const router = useRouter();
+
 	const handleClick = () => {
-		if (!link) return;
-		if (link.startsWith('http')) {
+		if (slug) {
+			// Navigate to project detail page
+			router.push(`/projects/${slug}`);
+		} else if (link && link.startsWith('http')) {
+			// Fallback to external link if no slug provided
 			window.open(link, '_blank');
-		} else {
-			console.log('Internal route:', link);
 		}
 	};
 
@@ -95,7 +107,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ image, link, title, description, te
 
 				{/* Action Button */}
 				<div className="flex items-center gap-2 text-zinc-400 group-hover:text-white transition-colors duration-300">
-					<span className="text-sm font-medium">View Project</span>
+					<span className="text-sm font-medium">View Details</span>
 					<svg
 						className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
 						fill="none"

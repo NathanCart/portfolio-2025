@@ -1,5 +1,6 @@
 import { FC, useRef, useState, useEffect, MutableRefObject } from 'react';
 import { mat4, quat, vec2, vec3 } from 'gl-matrix';
+import { useRouter } from 'next/navigation';
 
 const discVertShaderSource = `#version 300 es
 
@@ -646,6 +647,7 @@ interface MenuItem {
 	title: string;
 	description: string;
 	technologies?: string[];
+	slug?: string;
 }
 
 type ActiveItemCallback = (index: number) => void;
@@ -1160,9 +1162,11 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
 	const canvasRef = useRef<HTMLCanvasElement | null>(
 		null
 	) as MutableRefObject<HTMLCanvasElement | null>;
+	const menuRef = useRef<InfiniteGridMenu | null>(null);
 	const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
 	const [isMoving, setIsMoving] = useState<boolean>(false);
 	const [hasInteracted, setHasInteracted] = useState<boolean>(false);
+	const router = useRouter();
 
 	useEffect(() => {
 		const canvas = canvasRef.current;
@@ -1207,11 +1211,14 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
 	}, [items]);
 
 	const handleButtonClick = () => {
-		if (!activeItem?.link) return;
-		if (activeItem.link.startsWith('http')) {
+		if (!activeItem) return;
+
+		if (activeItem.slug) {
+			// Navigate to project detail page
+			router.push(`/projects/${activeItem.slug}`);
+		} else if (activeItem.link && activeItem.link.startsWith('http')) {
+			// Fallback to external link if no slug provided
 			window.open(activeItem.link, '_blank');
-		} else {
-			console.log('Internal route:', activeItem.link);
 		}
 	};
 

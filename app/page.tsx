@@ -194,45 +194,14 @@ const skillsData = [
 ];
 
 // Projects Data Structure
-const projectsData = [
-	{
-		image: 'https://picsum.photos/900/900?grayscale',
-		link: 'https://github.com/NathanCart',
-		title: 'E-Commerce Platform',
-		description: 'Full-stack e-commerce solution with React, Node.js, and MongoDB',
-	},
-	{
-		image: 'https://picsum.photos/900/900?grayscale',
-		link: 'https://github.com/NathanCart',
-		title: 'Task Management App',
-		description: 'Real-time collaborative task management with WebSocket integration',
-	},
-	{
-		image: 'https://picsum.photos/900/900?grayscale',
-		link: 'https://github.com/NathanCart',
-		title: 'Portfolio Website',
-		description: 'Modern portfolio built with Next.js, TypeScript, and Framer Motion',
-	},
-	{
-		image: 'https://picsum.photos/900/900?grayscale',
-		link: 'https://github.com/NathanCart',
-		title: 'Weather Dashboard',
-		description: 'Interactive weather app with real-time data and beautiful UI',
-	},
-	{
-		image: 'https://picsum.photos/900/900?grayscale',
-		link: 'https://github.com/NathanCart',
-		title: 'Social Media Clone',
-		description: 'Feature-rich social platform with authentication and real-time features',
-	},
-	{
-		image: 'https://picsum.photos/900/900?grayscale',
-		link: 'https://github.com/NathanCart',
-		title: 'AI Chat Application',
-		description:
-			'Intelligent chatbot powered by machine learning and natural language processing',
-	},
-];
+const projectsData = projects.map((project) => ({
+	image: project.image,
+	link: project.hosted || project.github || '',
+	title: project.title,
+	description: project.description,
+	technologies: project.technologies,
+	slug: project.slug,
+}));
 
 // Helper function to get color classes
 const getColorClasses = (color: string) => {
@@ -525,6 +494,7 @@ export default function Home() {
 			title: project.title,
 			description: project.description,
 			technologies: project.technologies ? convertTechNames(project.technologies) : [],
+			slug: project.slug,
 		}));
 	}, []);
 
@@ -556,7 +526,7 @@ export default function Home() {
 				id="about"
 				className="fixed top-0 left-0 w-full min-h-screen bg-zinc-900/95 backdrop-blur-sm flex items-center justify-center z-20 transition-opacity duration-300"
 				style={{
-					transform: `translateY(${Math.max(0, scrollY - window.innerHeight)}px)`,
+					transform: `translateY(${Math.min(0, -(scrollY - window.innerHeight))}px)`,
 					opacity: Math.max(
 						0,
 						Math.min(
@@ -723,7 +693,7 @@ export default function Home() {
 			{/* Projects Section */}
 			<section
 				id="projects"
-				className="min-h-screen bg-zinc-900 flex items-center justify-center relative z-30 overflow-hidden"
+				className="min-h-screen bg-zinc-900 flex items-center justify-center relative z-30"
 			>
 				{/* Background Pattern */}
 				<div className="absolute inset-0 opacity-5">
@@ -741,8 +711,8 @@ export default function Home() {
 					{/* Section Header */}
 					<div className="text-center pt-16 pb-8 relative z-10">
 						<div
-							style={{ position: 'relative', height: '30vw', maxHeight: '400px' }}
-							className="mx-auto container lg:pt-10 px-4 "
+							style={{ position: 'relative', height: '23vw', maxHeight: '250px' }}
+							className="mx-auto  lg:pt-10 px-4 max-w-4xl"
 						>
 							<TextPressure
 								text="Projects"

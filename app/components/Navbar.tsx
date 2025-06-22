@@ -5,11 +5,21 @@ import { useRouter, usePathname } from 'next/navigation';
 export default function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [isLoaded, setIsLoaded] = useState(false);
 	const router = useRouter();
 	const pathname = usePathname();
 	const isHomePage = pathname === '/';
 	const mobileMenuRef = useRef<HTMLDivElement>(null);
 	const mobileButtonRef = useRef<HTMLButtonElement>(null);
+
+	useEffect(() => {
+		// Trigger animation after component mounts
+		const timer = setTimeout(() => {
+			setIsLoaded(true);
+		}, 100);
+
+		return () => clearTimeout(timer);
+	}, []);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -112,7 +122,10 @@ export default function Navbar() {
 					<div className="hidden md:flex items-center space-x-2">
 						<button
 							onClick={() => scrollToSection('about')}
-							className="relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-300 group cursor-pointer"
+							className={`relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-700 transform ${
+								isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+							}`}
+							style={{ transitionDelay: '0.1s' }}
 						>
 							<span className="relative z-10">About</span>
 							<div className="absolute inset-0 bg-zinc-800/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -120,7 +133,10 @@ export default function Navbar() {
 						</button>
 						<button
 							onClick={() => scrollToSection('skills')}
-							className="relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-300 group cursor-pointer"
+							className={`relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-700 transform ${
+								isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+							}`}
+							style={{ transitionDelay: '0.2s' }}
 						>
 							<span className="relative z-10">Skills</span>
 							<div className="absolute inset-0 bg-zinc-800/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -128,7 +144,10 @@ export default function Navbar() {
 						</button>
 						<button
 							onClick={() => scrollToSection('projects')}
-							className="relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-300 group cursor-pointer"
+							className={`relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-700 transform ${
+								isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+							}`}
+							style={{ transitionDelay: '0.3s' }}
 						>
 							<span className="relative z-10">Projects</span>
 							<div className="absolute inset-0 bg-zinc-800/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -141,7 +160,10 @@ export default function Navbar() {
 						<button
 							ref={mobileButtonRef}
 							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-							className="text-zinc-300 hover:text-white p-3 rounded-lg hover:bg-zinc-800/50 transition-all duration-300 cursor-pointer"
+							className={`text-zinc-300 hover:text-white p-3 rounded-lg hover:bg-zinc-800/50 transition-all duration-700 transform ${
+								isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+							}`}
+							style={{ transitionDelay: '0.1s' }}
 							aria-label="Toggle mobile menu"
 						>
 							<svg

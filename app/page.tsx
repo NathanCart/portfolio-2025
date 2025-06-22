@@ -527,15 +527,23 @@ export default function Home() {
 				id="about"
 				className="fixed top-0 left-0 w-full min-h-screen bg-zinc-900/95 backdrop-blur-sm flex items-center justify-center z-20 transition-opacity duration-300"
 				style={{
-					transform: `translateY(${Math.min(0, -(scrollY - window.innerHeight))}px)`,
+					transform: `translateY(${Math.min(
+						0,
+						-(scrollY - (typeof window !== 'undefined' ? window.innerHeight : 0))
+					)}px)`,
 					opacity: Math.max(
 						0,
 						Math.min(
 							1,
-							(scrollY - window.innerHeight * 0.3) / (window.innerHeight * 0.4)
+							(scrollY -
+								(typeof window !== 'undefined' ? window.innerHeight * 0.3 : 0)) /
+								(typeof window !== 'undefined' ? window.innerHeight * 0.4 : 1)
 						)
 					),
-					pointerEvents: scrollY > window.innerHeight * 0.5 ? 'auto' : 'none',
+					pointerEvents:
+						scrollY > (typeof window !== 'undefined' ? window.innerHeight * 0.5 : 0)
+							? 'auto'
+							: 'none',
 				}}
 			>
 				<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

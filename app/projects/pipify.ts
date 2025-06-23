@@ -13,11 +13,8 @@ const pipify: Project = {
 	what: 'Pipify is a comprehensive AI-powered plant care and identification app designed to help users identify plants, diagnose health problems, and get personalized care advice. The app serves both beginners and seasoned gardeners with advanced features including instant plant identification through photo scanning, plant health diagnosis for detecting diseases and pests, an AI assistant named "Pip" for expert gardening advice, custom care schedules with reminders, detailed care guides for each plant species, and social features with leaderboards and friend connections. The app supports multiple languages and has achieved significant downloads across both iOS and Android platforms.',
 	technologies: [
 		'React Native',
-		'TypeScript',
-		'Node.js',
-		'AI/ML Integration',
-		'Computer Vision',
-		'Firebase',
+		'Expo',
+		'Supabase',
 		'Google Cloud',
 		'App Store Connect',
 		'Google Play Console',

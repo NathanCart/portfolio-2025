@@ -66,6 +66,8 @@ flat in int vInstanceId;
 void main() {
     int itemIndex = vInstanceId % uItemCount;
     int cellsPerRow = uAtlasSize;
+    int maxCells = cellsPerRow * cellsPerRow;
+    itemIndex = min(itemIndex, maxCells - 1); // Clamp to last cell if overflow
     int cellX = itemIndex % cellsPerRow;
     int cellY = itemIndex / cellsPerRow;
     vec2 cellSize = vec2(1.0) / vec2(float(cellsPerRow));
@@ -900,8 +902,23 @@ class InfiniteGridMenu {
 		);
 
 		const itemCount = Math.max(1, this.items.length);
-		this.atlasSize = Math.ceil(Math.sqrt(itemCount));
+
+		// Limit atlas size to prevent WebGL texture size issues
+		// Most devices support up to 2048x2048 textures safely
+		const maxAtlasSize = 4; // 4x4 grid = 16 items max per atlas
+		this.atlasSize = Math.min(Math.ceil(Math.sqrt(itemCount)), maxAtlasSize);
+
 		const cellSize = 512;
+		const maxTextureSize = this.atlasSize * cellSize;
+
+		// Ensure we don't exceed WebGL texture limits
+		const maxSupportedSize = Math.min(2048, gl.getParameter(gl.MAX_TEXTURE_SIZE));
+		if (maxTextureSize > maxSupportedSize) {
+			// Reduce cell size if needed
+			const adjustedCellSize = Math.floor(maxSupportedSize / this.atlasSize);
+			const cellSize = Math.max(256, adjustedCellSize); // Minimum 256px
+		}
+
 		const canvas = document.createElement('canvas');
 		const ctx = canvas.getContext('2d')!;
 		canvas.width = this.atlasSize * cellSize;
@@ -920,6 +937,13 @@ class InfiniteGridMenu {
 						const img = new Image();
 						img.crossOrigin = 'anonymous';
 						img.onload = () => resolve(img);
+						img.onerror = () => {
+							// Fallback to a default image if loading fails
+							const fallbackImg = new Image();
+							fallbackImg.onload = () => resolve(fallbackImg);
+							fallbackImg.src =
+								'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjMzMzMzMzIi8+Cjx0ZXh0IHg9IjI1NiIgeT0iMjU2IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNDgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+SW1hZ2U8L3RleHQ+Cjwvc3ZnPgo=';
+						};
 						img.src = item.image;
 					})
 			)

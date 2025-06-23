@@ -3,6 +3,8 @@ import armaKarmaDashboard from './armaKarmaDashboard';
 import armaKarmaMarketing from './armaKarmaMarketing';
 import att from './att';
 import ballen from './ballen';
+import flexiplan from './flexiplan';
+import metaDashboard from './metaDashboard';
 import mod from './mod';
 import pipify from './pipify';
 import revwise from './revwise';
@@ -24,6 +26,12 @@ export interface Project {
 
 export function getBlogBySlug(slug: string): Project | null {
 	switch (slug) {
+		case 'meta-dashboard':
+			return metaDashboard;
+		case 'pipify':
+			return pipify;
+		case 'flexiplan':
+			return flexiplan;
 		case 'revwise':
 			return revwise;
 		case 'ballen-dashboard':
@@ -38,14 +46,16 @@ export function getBlogBySlug(slug: string): Project | null {
 			return armaKarmaMarketing;
 		case 'arma-karma-dashboard':
 			return armaKarmaDashboard;
-		case 'pipify':
-			return pipify;
+
 		default:
 			return null;
 	}
 }
 
 const projects: Project[] = [
+	metaDashboard,
+	pipify,
+	flexiplan,
 	armaKarmaVeygo,
 	armaKarmaMarketing,
 	ballen,
@@ -53,7 +63,6 @@ const projects: Project[] = [
 	mod,
 	att,
 	armaKarmaDashboard,
-	pipify,
 ];
 
 export default projects;

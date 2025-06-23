@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import Particles from '../components/Particles';
@@ -95,41 +95,45 @@ export default function FeaturedProjects() {
 	};
 
 	// Hero content similar to homepage
-	const heroContent = (
-		<div className="flex items-center pointer-events-none flex-col justify-center z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-zinc-300">
-			<SplitText
-				text="FEATURED PROJECTS"
-				className="text-3xl md:text-6xl lg:text-8xl text-center font-black whitespace-nowrap"
-				delay={50}
-				duration={0.6}
-				ease="power3.out"
-				splitType="chars"
-				from={{ opacity: 0, y: 40 }}
-				to={{ opacity: 1, y: 0 }}
-				threshold={0.1}
-				rootMargin="-100px"
-				textAlign="center"
-				onLetterAnimationComplete={() => {}}
-			/>
-			<SplitText
-				text="Showcasing My Most Impactful Work"
-				className="text-2xl md:text-3xl lg:text-4xl font-medium text-center"
-				delay={25}
-				duration={0.4}
-				ease="power3.out"
-				splitType="chars"
-				from={{ opacity: 0, y: 40 }}
-				to={{ opacity: 1, y: 0 }}
-				threshold={0.1}
-				rootMargin="-100px"
-				textAlign="center"
-				onLetterAnimationComplete={() => {}}
-			/>
+	// Memoize the hero content to prevent re-renders on scroll
+	const heroContent = useMemo(
+		() => (
+			<div className="flex items-center pointer-events-none flex-col justify-center z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-zinc-300">
+				<SplitText
+					text="FEATURED PROJECTS"
+					className="text-3xl md:text-6xl lg:text-8xl text-center font-black whitespace-nowrap"
+					delay={50}
+					duration={0.6}
+					ease="power3.out"
+					splitType="chars"
+					from={{ opacity: 0, y: 40 }}
+					to={{ opacity: 1, y: 0 }}
+					threshold={0.1}
+					rootMargin="-100px"
+					textAlign="center"
+					onLetterAnimationComplete={() => {}}
+				/>
+				<SplitText
+					text="Showcasing My Most Impactful Work"
+					className="text-2xl md:text-3xl lg:text-4xl font-medium text-center"
+					delay={25}
+					duration={0.4}
+					ease="power3.out"
+					splitType="chars"
+					from={{ opacity: 0, y: 40 }}
+					to={{ opacity: 1, y: 0 }}
+					threshold={0.1}
+					rootMargin="-100px"
+					textAlign="center"
+					onLetterAnimationComplete={() => {}}
+				/>
 
-			{/* Social Media Buttons */}
-			<SocialLinks className="mt-8" />
-		</div>
-	);
+				{/* Social Media Buttons */}
+				<SocialLinks className="mt-8" />
+			</div>
+		),
+		[]
+	); // Empty dependency array ensures this only runs once on mount
 
 	return (
 		<main className="min-h-screen relative overflow-hidden bg-zinc-900">

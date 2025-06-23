@@ -117,6 +117,11 @@ export default function Navbar() {
 		}, 100);
 	};
 
+	const navigateToFeatured = () => {
+		setIsMobileMenuOpen(false);
+		router.push('/featured');
+	};
+
 	return (
 		<nav
 			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out cursor-pointer ${
@@ -161,6 +166,17 @@ export default function Navbar() {
 							<span className="relative z-10">Projects</span>
 							<div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 							<div className="absolute bottom-0 left-1/2 w-0 h-1 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
+						</button>
+						<button
+							onClick={navigateToFeatured}
+							className={`group relative px-8 py-4 text-zinc-300 hover:text-white font-semibold text-lg transition-all duration-700 transform ${
+								isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+							} hover:scale-105 hover:bg-zinc-800/30 rounded-lg cursor-pointer`}
+							style={{ transitionDelay: '0.4s' }}
+						>
+							<span className="relative z-10">Featured Projects</span>
+							<div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-pink-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+							<div className="absolute bottom-0 left-1/2 w-0 h-1 bg-gradient-to-r from-indigo-500 to-pink-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
 						</button>
 					</div>
 
@@ -222,6 +238,13 @@ export default function Navbar() {
 						>
 							<span className="relative z-10">Projects</span>
 							<div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full transition-all duration-300 rounded-full"></div>
+						</button>
+						<button
+							onClick={navigateToFeatured}
+							className="group w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-zinc-800/50 rounded-lg font-semibold transition-all duration-300 relative hover:scale-105 cursor-pointer"
+						>
+							<span className="relative z-10">Featured</span>
+							<div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-indigo-500 to-pink-500 group-hover:w-full transition-all duration-300 rounded-full"></div>
 						</button>
 					</div>
 				</div>

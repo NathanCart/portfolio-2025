@@ -769,7 +769,7 @@ export default function Home() {
 							/>
 						</div>
 						<p className="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed mt-6">
-							Explore my latest work and creative solutions
+							Explore some of my latest work and creative solutions
 						</p>
 					</div>
 

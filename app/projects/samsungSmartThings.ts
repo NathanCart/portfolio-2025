@@ -6,7 +6,7 @@ const samsungSmartThings: Project = {
 		'Interactive kiosk experience for Samsung Smart Things using WebSockets and QR codes to showcase smart home product features and customer journey.',
 	slug: 'samsung-smart-things',
 	image: '/work/smart-things.png',
-	title: 'Samsung Smart Things Interactive Kiosk',
+	title: 'Samsung Smart Things',
 	description:
 		'Interactive kiosk experience that uses WebSockets and QR codes to create an immersive customer journey showcasing Samsung Smart Things product features and smart home capabilities.',
 	what: "The Samsung Smart Things Interactive Kiosk is an innovative retail experience designed to demonstrate the power and convenience of Samsung's smart home ecosystem. The kiosk creates an immersive customer journey where visitors can interact with various Samsung Smart Things products in a hands-on environment. Users can scan QR codes to access detailed product information, watch demonstrations of smart features, and experience how different devices work together in a connected home environment. The system uses WebSocket technology to provide real-time updates and interactive elements, making the experience dynamic and engaging. The kiosk serves as both an educational tool and a sales enablement platform, helping customers understand the value proposition of Samsung's smart home solutions.",

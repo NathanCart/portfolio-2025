@@ -5,7 +5,7 @@ const flexiplan: Project = {
 	seoDescription:
 		'AI-powered fitness coaching app that generates personalized workout plans, tracks progress, and adapts to user goals and experience levels.',
 	slug: 'flexiplan',
-	hosted: 'https://flexiplan.app/',
+	hosted: 'https://flexiplan.fit/',
 	image: '/work/flexiplan-logo.svg',
 	title: 'FlexiPlan',
 	description:

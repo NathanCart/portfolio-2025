@@ -8,10 +8,73 @@ import ScrollIndicator from '../components/ScrollIndicator';
 import metaDashboard from '../projects/metaDashboard';
 import pipify from '../projects/pipify';
 import samsungSmartThings from '../projects/samsungSmartThings';
+import ProjectBubbles from '../components/ProjectBubbles';
+import projects from '../projects';
 
 // Social Links Component (copied from homepage)
 const SocialLinks = ({ className = '' }: { className?: string }) => {
 	const [isLoaded, setIsLoaded] = useState(false);
+
+	// Function to convert technology file names to readable names
+	const convertTechNames = (techs: string[]): string[] => {
+		const techMap: Record<string, string> = {
+			'react-logo.svg': 'React',
+			'nextjs-logo.svg': 'Next.js',
+			'contentful-logo.svg': 'Contentful',
+			'framer-motion-logo.svg': 'Framer Motion',
+			'tailwind-logo.svg': 'Tailwind CSS',
+			'typescript-logo.svg': 'TypeScript',
+			'nodejs-logo.svg': 'Node.js',
+			'express-logo.svg': 'Express',
+			'postgresql-logo.svg': 'PostgreSQL',
+			'mongodb-logo.svg': 'MongoDB',
+			'aws-logo.svg': 'AWS',
+			'docker-logo.svg': 'Docker',
+			'git-logo.svg': 'Git',
+			'vercel-logo.svg': 'Vercel',
+			'railway-logo.svg': 'Railway',
+			'supabase-logo.svg': 'Supabase',
+			'prisma-logo.svg': 'Prisma',
+			'drizzle-logo.svg': 'Drizzle',
+			'graphql-logo.svg': 'GraphQL',
+			'websocket-logo.svg': 'WebSockets',
+			'jwt-logo.svg': 'JWT',
+			'oauth-logo.svg': 'OAuth',
+			'react-native-logo.svg': 'React Native',
+			'expo-logo.svg': 'Expo',
+			'pwa-logo.svg': 'PWA',
+			'storybook-logo.svg': 'Storybook',
+			'playwright-logo.svg': 'Playwright',
+			'eslint-logo.svg': 'ESLint',
+			'prettier-logo.svg': 'Prettier',
+			'lighthouse-logo.svg': 'Lighthouse',
+			'semrush-logo.svg': 'Semrush',
+			'mui-logo.svg': 'MUI',
+			'shadcn-logo.svg': 'shadcn/ui',
+		};
+
+		return techs.map(
+			(tech) =>
+				techMap[tech] ||
+				tech
+					.replace('.svg', '')
+					.replace('-logo', '')
+					.replace(/-/g, ' ')
+					.replace(/\b\w/g, (l) => l.toUpperCase())
+		);
+	};
+
+	// Transform projects data for InfiniteMenu
+	const projectsData = useMemo(() => {
+		return projects.map((project) => ({
+			image: project.image,
+			link: project.hosted || project.github || '#',
+			title: project.title,
+			description: project.description,
+			technologies: project.technologies ? convertTechNames(project.technologies) : [],
+			slug: project.slug,
+		}));
+	}, []);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -406,6 +469,16 @@ export default function FeaturedProjects() {
 					</div>
 				</div>
 			</div>
+
+			{/* Project Navigation Bubbles */}
+			<ProjectBubbles
+				projects={projects.map((project) => ({
+					slug: project.slug || '',
+					title: project.title,
+					image: project.image,
+					description: project.description,
+				}))}
+			/>
 		</main>
 	);
 }

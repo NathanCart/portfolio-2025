@@ -4,6 +4,7 @@ import armaKarmaMarketing from './armaKarmaMarketing';
 import att from './att';
 import ballen from './ballen';
 import mod from './mod';
+import pipify from './pipify';
 import revwise from './revwise';
 
 export interface Project {
@@ -37,6 +38,8 @@ export function getBlogBySlug(slug: string): Project | null {
 			return armaKarmaMarketing;
 		case 'arma-karma-dashboard':
 			return armaKarmaDashboard;
+		case 'pipify':
+			return pipify;
 		default:
 			return null;
 	}
@@ -50,6 +53,7 @@ const projects: Project[] = [
 	mod,
 	att,
 	armaKarmaDashboard,
+	pipify,
 ];
 
 export default projects;

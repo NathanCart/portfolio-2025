@@ -6,7 +6,7 @@ const armaKarmaMarketing: Project = {
 		'Modern marketing website for Arma Karma insurance, built with TinaCMS for easy content management and optimized for search engines.',
 	slug: 'arma-karma-marketing',
 	hosted: 'https://armakarma.insure/',
-	image: '/work/arma-karma/ak-marketing-cover.webp',
+	image: '/work/arma-karma.jpeg',
 	title: 'Arma Karma Marketing',
 	description:
 		'Modern marketing website for Arma Karma insurance, featuring TinaCMS content management and comprehensive SEO optimization.',

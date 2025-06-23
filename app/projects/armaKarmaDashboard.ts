@@ -5,7 +5,7 @@ const armaKarmaDashboard: Project = {
 	seoDescription:
 		'Advanced analytics dashboard for Arma Karma insurance, featuring real-time data aggregation, user journey insights, and comprehensive reporting.',
 	slug: 'arma-karma-dashboard',
-	image: '/work/arma-karma/ak-dashboard-cover.webp',
+	image: '/work/arma-karma.jpeg',
 	title: 'Arma Karma Dashboard',
 	description:
 		'Advanced analytics dashboard for Arma Karma insurance, providing real-time insights into user journeys, conversion rates, and business performance.',

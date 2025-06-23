@@ -5,7 +5,7 @@ const mod: Project = {
 	seoDescription:
 		'Secure web application for Military Corrective Training Centre, featuring role-based access control, dynamic form generation, and comprehensive resource management.',
 	slug: 'mctc-learner-platform',
-	image: '/work/mod-cover.webp',
+	image: '/work/gov-uk.webp',
 	title: 'Military Training Centre',
 	description:
 		'Secure web application for Military Corrective Training Centre staff and detainees, featuring role-based access control and dynamic resource management.',

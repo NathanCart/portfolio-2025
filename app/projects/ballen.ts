@@ -5,7 +5,7 @@ const ballen: Project = {
 	seoDescription:
 		'AI-powered content management dashboard for Ballen Studios, featuring web scraping, machine learning categorization, and comprehensive story research tools.',
 	slug: 'ballen-dashboard',
-	image: '/work/ballen-cover.webp',
+	image: '/work/ballen.webp',
 	title: 'Ballen Dashboard',
 	description:
 		'AI-powered content management system for Ballen Studios, enabling researchers to access and categorize thousands of horror stories for YouTube content creation.',

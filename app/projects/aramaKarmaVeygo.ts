@@ -6,7 +6,7 @@ const armaKarmaVeygo: Project = {
 		'Multi-tenant insurance journey platform for Arma Karma and Veygo, featuring dynamic configuration management and seamless user experience.',
 	slug: 'arma-karma-veygo',
 	hosted: 'https://get-started.armakarma.insure/item-selection',
-	image: '/work/arma-karma/ak-cover.webp',
+	image: '/work/veygo.png',
 	title: 'Arma Karma/Veygo Journey',
 	description:
 		'Multi-tenant insurance journey platform enabling users to select and customize insurance coverage with dynamic branding and configuration management.',

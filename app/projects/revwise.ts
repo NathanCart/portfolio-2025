@@ -6,7 +6,7 @@ const revwise: Project = {
 		'Award-winning marketing website for RevWise, a global affiliate management agency, featuring advanced animations and seamless user experience.',
 	slug: 'revwise',
 	hosted: 'https://revwise.com/',
-	image: '/work/revwise/revwise-phone-cover.webp',
+	image: '/work/revwise.jpeg',
 	title: 'RevWise',
 	description:
 		'Award-winning marketing website for a global affiliate management agency, designed to showcase services and generate qualified leads.',

@@ -8,6 +8,7 @@ import metaDashboard from './metaDashboard';
 import mod from './mod';
 import pipify from './pipify';
 import revwise from './revwise';
+import samsungSmartThings from './samsungSmartThings';
 
 export interface Project {
 	github?: string;
@@ -30,6 +31,8 @@ export function getBlogBySlug(slug: string): Project | null {
 			return metaDashboard;
 		case 'pipify':
 			return pipify;
+		case 'samsung-smart-things':
+			return samsungSmartThings;
 		case 'flexiplan':
 			return flexiplan;
 		case 'revwise':
@@ -55,6 +58,7 @@ export function getBlogBySlug(slug: string): Project | null {
 const projects: Project[] = [
 	metaDashboard,
 	pipify,
+	samsungSmartThings,
 	flexiplan,
 	armaKarmaVeygo,
 	armaKarmaMarketing,

@@ -1392,7 +1392,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
 					<div className="relative z-10">
 						<div className="flex items-center justify-center gap-3">
 							<span className="text-zinc-400 text-sm font-medium">
-								Slide {currentSlideIndex + 1} of {items.length || 1}
+								Project {currentSlideIndex + 1} of {items.length || 1}
 							</span>
 							<div className="w-1 h-1 bg-zinc-600 rounded-full"></div>
 							<span className="text-zinc-300 font-semibold text-base">

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import Particles from '../components/Particles';
@@ -75,129 +75,6 @@ const SocialLinks = ({ className = '' }: { className?: string }) => {
 				</svg>
 				<span className="font-semibold relative z-10">LinkedIn</span>
 			</a>
-		</div>
-	);
-};
-
-// Enhanced Parallax Card Component
-const ParallaxCard = ({
-	children,
-	delay = 0,
-	isLoaded,
-	className = '',
-}: {
-	children: React.ReactNode;
-	delay?: number;
-	isLoaded: boolean;
-	className?: string;
-}) => {
-	const cardRef = useRef<HTMLDivElement>(null);
-	const [isInView, setIsInView] = useState(false);
-	const [scrollY, setScrollY] = useState(0);
-	const [mouseX, setMouseX] = useState(0);
-	const [mouseY, setMouseY] = useState(0);
-
-	useEffect(() => {
-		const handleScroll = () => {
-			if (typeof window === 'undefined') return;
-			setScrollY(window.scrollY);
-		};
-
-		const handleMouseMove = (e: MouseEvent) => {
-			if (typeof window === 'undefined') return;
-			setMouseX(e.clientX);
-			setMouseY(e.clientY);
-		};
-
-		window.addEventListener('scroll', handleScroll, { passive: true });
-		window.addEventListener('mousemove', handleMouseMove, { passive: true });
-
-		return () => {
-			window.removeEventListener('scroll', handleScroll);
-			window.removeEventListener('mousemove', handleMouseMove);
-		};
-	}, []);
-
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				setIsInView(entry.isIntersecting);
-			},
-			{
-				threshold: 0.1,
-				rootMargin: '-100px 0px -100px 0px',
-			}
-		);
-
-		if (cardRef.current) {
-			observer.observe(cardRef.current);
-		}
-
-		return () => {
-			if (cardRef.current) {
-				observer.unobserve(cardRef.current);
-			}
-		};
-	}, []);
-
-	const getParallaxTransform = () => {
-		if (!cardRef.current || !isInView)
-			return {
-				transform: 'translateY(0px) scale(1) rotateX(0deg) rotateY(0deg)',
-				boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.3)',
-			};
-
-		const rect = cardRef.current.getBoundingClientRect();
-		const windowHeight = window.innerHeight;
-		const windowWidth = window.innerWidth;
-		const cardCenter = rect.top + rect.height / 2;
-		const cardCenterX = rect.left + rect.width / 2;
-		const viewportCenter = windowHeight / 2;
-		const viewportCenterX = windowWidth / 2;
-
-		// Vertical parallax effect
-		const distanceFromCenter = cardCenter - viewportCenter;
-		const maxDistance = windowHeight / 2;
-		const verticalParallaxFactor = distanceFromCenter / maxDistance;
-
-		// Horizontal mouse parallax effect
-		const mouseDistanceFromCenter = mouseX - viewportCenterX;
-		const horizontalParallaxFactor = mouseDistanceFromCenter / viewportCenterX;
-
-		// Enhanced parallax calculations
-		const translateY = verticalParallaxFactor * 150; // Increased movement
-		const translateX = horizontalParallaxFactor * 30; // Subtle horizontal movement
-		const scale = 1 + Math.abs(verticalParallaxFactor) * 0.08; // Enhanced scale effect
-
-		// 3D rotation effects
-		const rotateX = verticalParallaxFactor * 5; // Tilt based on vertical position
-		const rotateY = horizontalParallaxFactor * 3; // Tilt based on mouse position
-
-		// Dynamic shadow based on position
-		const shadowX = horizontalParallaxFactor * 20;
-		const shadowY = verticalParallaxFactor * 20;
-		const shadowBlur = 20 + Math.abs(verticalParallaxFactor) * 10;
-
-		return {
-			transform: `translateY(${translateY}px) translateX(${translateX}px) scale(${scale}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-			boxShadow: `${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0, 0, 0, 0.3)`,
-		};
-	};
-
-	const transformStyle = getParallaxTransform();
-
-	return (
-		<div
-			ref={cardRef}
-			className={`transition-all duration-700 ease-out perspective-1000 ${className}`}
-			style={{
-				...transformStyle,
-				opacity: isLoaded && isInView ? 1 : 0,
-				transitionDelay: `${delay}ms`,
-				transformStyle: 'preserve-3d',
-			}}
-		>
-			{children}
 		</div>
 	);
 };
@@ -281,7 +158,11 @@ export default function FeaturedProjects() {
 			<div className="max-w-7xl mx-auto px-4 py-20">
 				<div className="grid gap-16">
 					{/* Meta Dashboard */}
-					<ParallaxCard delay={500} isLoaded={isLoaded}>
+					<div
+						className={`transition-all duration-1000 delay-500 ${
+							isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+						}`}
+					>
 						<div
 							onClick={() => handleProjectClick(metaDashboard.slug)}
 							className="group cursor-pointer relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-500 hover:scale-[1.02]"
@@ -353,10 +234,14 @@ export default function FeaturedProjects() {
 								</div>
 							</div>
 						</div>
-					</ParallaxCard>
+					</div>
 
 					{/* Pipify */}
-					<ParallaxCard delay={700} isLoaded={isLoaded}>
+					<div
+						className={`transition-all duration-1000 delay-700 ${
+							isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+						}`}
+					>
 						<div
 							onClick={() => handleProjectClick(pipify.slug)}
 							className="group cursor-pointer relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-900/20 to-emerald-900/20 border border-green-500/20 hover:border-green-400/40 transition-all duration-500 hover:scale-[1.02]"
@@ -428,10 +313,14 @@ export default function FeaturedProjects() {
 								</div>
 							</div>
 						</div>
-					</ParallaxCard>
+					</div>
 
 					{/* Samsung Smart Things - Improved */}
-					<ParallaxCard delay={900} isLoaded={isLoaded}>
+					<div
+						className={`transition-all duration-1000 delay-900 ${
+							isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+						}`}
+					>
 						<div
 							onClick={() => handleProjectClick(samsungSmartThings.slug)}
 							className="group cursor-pointer relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900/20 to-gray-900/20 border border-slate-500/20 hover:border-slate-400/40 transition-all duration-500 hover:scale-[1.02]"
@@ -510,7 +399,7 @@ export default function FeaturedProjects() {
 								</div>
 							</div>
 						</div>
-					</ParallaxCard>
+					</div>
 				</div>
 			</div>
 		</main>

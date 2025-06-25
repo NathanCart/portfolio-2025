@@ -191,21 +191,28 @@ export default function Navbar() {
 							style={{ transitionDelay: '0.1s' }}
 							aria-label="Toggle mobile menu"
 						>
-							<svg
-								className={`h-8 w-8 transition-transform duration-300 ${
-									isMobileMenuOpen ? 'rotate-90' : 'rotate-0'
-								}`}
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M4 6h16M4 12h16M4 18h16"
-								/>
-							</svg>
+							<div className="relative h-8 w-8">
+								{/* Hamburger lines */}
+								<span
+									className={`absolute left-0 top-0 h-0.5 w-8 bg-current transform transition-all duration-300 ${
+										isMobileMenuOpen
+											? 'rotate-45 translate-y-3'
+											: 'rotate-0 translate-y-0'
+									}`}
+								></span>
+								<span
+									className={`absolute left-0 top-3 h-0.5 w-8 bg-current transform transition-all duration-300 ${
+										isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
+									}`}
+								></span>
+								<span
+									className={`absolute left-0 top-6 h-0.5 w-8 bg-current transform transition-all duration-300 ${
+										isMobileMenuOpen
+											? '-rotate-45 -translate-y-3'
+											: 'rotate-0 translate-y-0'
+									}`}
+								></span>
+							</div>
 						</button>
 					</div>
 				</div>

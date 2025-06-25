@@ -84,7 +84,7 @@ const SocialLinks = ({ className = '' }: { className?: string }) => {
 	}, []);
 
 	return (
-		<div className={`flex flex-wrap gap-4 ${className} pointer-events-auto`}>
+		<div className={`flex gap-4 ${className} pointer-events-auto`}>
 			<a
 				href="https://github.com/NathanCart"
 				target="_blank"
@@ -115,7 +115,7 @@ const SocialLinks = ({ className = '' }: { className?: string }) => {
 			</a>
 
 			<a
-				href="https://www.linkedin.com/in/nathan-carter-782725297/"
+				href="https://www.linkedin.com/in/nathan-carter-software-developer/"
 				target="_blank"
 				rel="noopener noreferrer"
 				className={`group relative flex items-center gap-3 px-4 sm:px-6 py-3 bg-gradient-to-r from-zinc-800 to-zinc-700 hover:from-blue-600 hover:to-blue-500 text-zinc-300 hover:text-white rounded-xl transition-all duration-300 border border-zinc-600 hover:border-blue-400 shadow-lg hover:shadow-xl hover:shadow-blue-900/50 transform hover:-translate-y-1 cursor-pointer ${
@@ -137,31 +137,6 @@ const SocialLinks = ({ className = '' }: { className?: string }) => {
 					<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
 				</svg>
 				<span className="font-semibold relative z-10">LinkedIn</span>
-			</a>
-
-			<a
-				href="https://leafly-app.s3.eu-west-2.amazonaws.com/cv.pdf"
-				target="_blank"
-				rel="noopener noreferrer"
-				className={`group relative flex items-center gap-3 px-4 sm:px-6 py-3 bg-gradient-to-r from-zinc-800 to-zinc-700 hover:from-green-600 hover:to-emerald-500 text-zinc-300 hover:text-white rounded-xl transition-all duration-300 border border-zinc-600 hover:border-green-400 shadow-lg hover:shadow-xl hover:shadow-green-900/50 transform hover:-translate-y-1 cursor-pointer ${
-					isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-				}`}
-				style={{
-					transitionDelay: '0.3s',
-					transitionDuration: '0.6s',
-					transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-				}}
-			>
-				<div className="absolute inset-0 bg-gradient-to-r from-green-500/0 to-emerald-600/0 group-hover:from-green-500/20 group-hover:to-emerald-600/20 rounded-xl transition-all duration-300"></div>
-				<svg
-					className="w-5 h-5 group-hover:scale-110 transition-transform duration-300 relative z-10"
-					fill="currentColor"
-					viewBox="0 0 24 24"
-					aria-hidden="true"
-				>
-					<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM14 3v5h5M16 13H8M16 17H8M10 9H8" />
-				</svg>
-				<span className="font-semibold relative z-10">CV</span>
 			</a>
 		</div>
 	);
@@ -186,10 +161,10 @@ export default function FeaturedProjects() {
 	// Memoize the hero content to prevent re-renders on scroll
 	const heroContent = useMemo(
 		() => (
-			<div className="flex items-center pointer-events-none flex-col justify-center z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-zinc-300">
+			<div className="flex items-center pointer-events-none container mx-auto  flex-col justify-center z-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-zinc-300">
 				<SplitText
 					text="FEATURED PROJECTS"
-					className="text-3xl md:text-6xl lg:text-8xl text-center font-black whitespace-nowrap"
+					className="text-2xl sm:text-3xl md:text-6xl lg:text-8xl text-center px-4 font-black whitespace-nowrap"
 					delay={50}
 					duration={0.6}
 					ease="power3.out"
@@ -247,8 +222,8 @@ export default function FeaturedProjects() {
 			</div>
 
 			{/* Projects Grid */}
-			<div className="max-w-7xl mx-auto px-4 py-20">
-				<div className="grid gap-16">
+			<div className="max-w-7xl mx-auto px-4 lg:py-20">
+				<div className="grid gap-8 lg:gap-16">
 					{/* Meta Dashboard */}
 					<div
 						className={`transition-all duration-1000 delay-500 ${
@@ -267,7 +242,7 @@ export default function FeaturedProjects() {
 								}}
 							></div>
 
-							<div className="relative p-8 md:p-12">
+							<div className="relative p-4 sm:p-8 md:p-12">
 								<div className="flex flex-col lg:flex-row items-start gap-8">
 									{/* Image */}
 									<div className="lg:w-1/2">
@@ -346,7 +321,7 @@ export default function FeaturedProjects() {
 								}}
 							></div>
 
-							<div className="relative p-8 md:p-12">
+							<div className="relative p-4 sm:p-8 md:p-12">
 								<div className="flex flex-col lg:flex-row-reverse items-start gap-8">
 									{/* Image */}
 									<div className="lg:w-1/2">
@@ -430,7 +405,7 @@ export default function FeaturedProjects() {
 							<div className="absolute bottom-4 left-4 w-3 h-3 bg-gray-400 rounded-full animate-pulse delay-1000"></div>
 							<div className="absolute top-1/2 right-8 w-1 h-1 bg-slate-300 rounded-full animate-pulse delay-2000"></div>
 
-							<div className="relative p-8 md:p-12">
+							<div className="relative p-4 sm:p-8 md:p-12">
 								<div className="flex flex-col lg:flex-row items-start gap-8">
 									{/* Image - Improved with object-contain */}
 									<div className="lg:w-1/2">
